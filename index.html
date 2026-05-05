@@ -38,8 +38,12 @@
     padding: 4.5vh 6vw;
     display: none;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
+  .slide::-webkit-scrollbar { width: 6px; }
+  .slide::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
 
   .slide.active { display: flex; }
 
@@ -501,6 +505,130 @@
     line-height: 1.4;
   }
   ul.compact li strong { color: var(--accent); font-weight: 600; }
+
+  /* ========================================
+     MOBILE RESPONSIVE — phones & narrow tablets
+     ======================================== */
+  @media (max-width: 768px) {
+    .slide {
+      padding: 4vw 5vw 8vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* TITLE & SECTION DIVIDERS */
+    .slide-title-page h1, h1.deck-title { font-size: 10vw !important; line-height: 1.05; }
+    .slide-title-page .subtitle { font-size: 4.2vw !important; max-width: 100%; }
+    .slide-title-page .meta { font-size: 3vw !important; }
+    .slide-title-page .accent-bar { width: 60px; height: 4px; margin-bottom: 2vh; }
+    .section-divider h1 { font-size: 10vw !important; line-height: 1.05; }
+    .section-divider .section-desc { font-size: 4.2vw !important; max-width: 100%; }
+    .section-divider .section-label { font-size: 3vw !important; letter-spacing: 0.16em; }
+    .section-divider .section-count { font-size: 3vw !important; margin-top: 3vh; }
+
+    /* SLIDE HEADERS */
+    h2.slide-title { font-size: 6vw; line-height: 1.2; }
+    .eyebrow { font-size: 3vw; letter-spacing: 0.14em; }
+    .lede { font-size: 4vw; max-width: 100%; line-height: 1.45; margin-bottom: 2vh; }
+    p, li { font-size: 3.6vw; }
+
+    /* COL/GRID — STACK */
+    .two-col, .three-col {
+      grid-template-columns: 1fr !important;
+      gap: 3vh;
+      align-items: start !important;
+    }
+
+    /* STATS ROW — 4 → 2x2 */
+    .stats-row {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 3vw;
+      row-gap: 2.5vh;
+    }
+    .stat { padding-left: 3vw; }
+    .stat .num { font-size: 7vw !important; }
+    .stat .label { font-size: 2.7vw; }
+
+    /* CARDS — STACK 1-col */
+    .cards {
+      grid-template-columns: 1fr !important;
+      gap: 2.5vw;
+      grid-auto-rows: auto !important;
+    }
+    .card { padding: 2vh 4vw; }
+    .card h4 { font-size: 4.4vw; }
+    .card .sub { font-size: 2.7vw; }
+    .card p { font-size: 3.4vw; line-height: 1.5; }
+
+    /* COMPANY HEADER */
+    .company-header { padding-bottom: 1.5vh; margin-bottom: 2.5vh; }
+    .company-header h2 { font-size: 7.2vw; line-height: 1.1; }
+    .company-header .tagline { font-size: 3.7vw; max-width: 100%; line-height: 1.45; }
+
+    /* COMPANY META — 4 → 2x2 */
+    .company-meta {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3vw;
+      row-gap: 2.5vh;
+    }
+    .company-meta .item { padding-left: 2.5vw; }
+    .company-meta .item .label { font-size: 2.5vw; }
+    .company-meta .item .value { font-size: 3.6vw; }
+
+    /* COMPANY BODY — STACK */
+    .company-body {
+      grid-template-columns: 1fr !important;
+      gap: 3vh;
+    }
+    .company-news h3, .company-links h3 { font-size: 2.8vw; }
+    .company-news li {
+      font-size: 3.3vw;
+      flex-direction: column;
+      gap: 0.4vh;
+    }
+    .company-news li .date {
+      width: auto;
+      font-size: 2.8vw;
+    }
+    .company-links li, .company-links a { font-size: 3vw; }
+
+    /* LESSON CALLOUT */
+    .lesson-callout { padding: 1.5vh 4vw; margin-top: 2vh; }
+    .lesson-callout .lesson-label { font-size: 2.4vw; }
+    .lesson-callout p { font-size: 3.3vw; line-height: 1.45; }
+
+    /* DATA TABLES — shrink + horizontal scroll */
+    .data-table { font-size: 3vw; }
+    .data-table th { font-size: 2.4vw; padding: 1vh 2vw; }
+    .data-table td { padding: 1vh 2vw; }
+
+    /* COMPACT LIST / MARKERED LIST */
+    ul.compact li { font-size: 3.4vw; }
+    ul.markered li { font-size: 3.3vw; padding-left: 5vw; padding-right: 0; }
+
+    /* COL CONTENT */
+    .col h3 { font-size: 3.6vw; }
+    .col ul li { font-size: 3.3vw; }
+    .col p { font-size: 3.4vw; }
+
+    /* BIG TAKEAWAY */
+    .big-takeaway p { font-size: 5.5vw !important; max-width: 100%; }
+    .big-takeaway p:last-child { font-size: 3.5vw !important; }
+
+    /* KICKER */
+    .kicker { font-size: inherit; }
+
+    /* FOOTER & NAV HINT */
+    .footer { font-size: 2.3vw; left: 5vw; right: 5vw; bottom: 2vh; }
+    .nav-hint { display: none; }
+
+    /* GEOGRAPHY MAP — disable framing border on mobile */
+    .two-col > .col[style*="border"] {
+      border: none !important;
+      padding: 0 !important;
+      background: none !important;
+    }
+  }
 
 </style>
 </head>
@@ -2505,13 +2633,35 @@
     }
   });
 
-  // Click navigation: right half = next, left half = prev
-  document.addEventListener('click', (e) => {
-    if (e.target.tagName === 'A') return;
-    const w = window.innerWidth;
-    if (e.clientX > w / 2) show(current + 1);
-    else show(current - 1);
-  });
+  // Detect touch device
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  // Click navigation (desktop only): right half = next, left half = prev
+  if (!isTouch) {
+    document.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' || e.target.closest('a')) return;
+      const w = window.innerWidth;
+      if (e.clientX > w / 2) show(current + 1);
+      else show(current - 1);
+    });
+  }
+
+  // Touch swipe navigation (mobile)
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    // Only navigate on a clear horizontal swipe (not a vertical scroll gesture)
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      if (e.target.tagName === 'A' || e.target.closest('a')) return;
+      show(dx < 0 ? current + 1 : current - 1);
+    }
+  }, { passive: true });
 
   show(0);
 </script>
