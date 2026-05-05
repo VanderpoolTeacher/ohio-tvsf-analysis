@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ohio TVSF — Rounds 31–44 Analysis</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --muted: #6b6b6b;
+    --line: #d8d4cc;
+    --accent: #A91D3A;
+    --accent-soft: #C75566;
+    --blue: #1B4965;
+    --blue-soft: #5A8FAF;
+    --green: #2D6A4F;
+    --amber: #B7791F;
+    --gray: #999;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 4.5vh 6vw;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .slide.active { display: flex; }
+
+  h1.deck-title {
+    font-size: 4.4vw;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 2vh;
+  }
+
+  h2.slide-title {
+    font-size: 2.6vw;
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin-bottom: 0.6vh;
+    color: var(--fg);
+  }
+
+  .eyebrow {
+    font-size: 0.95vw;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 1vh;
+  }
+
+  .lede {
+    font-size: 1.4vw;
+    line-height: 1.45;
+    color: var(--muted);
+    max-width: 90%;
+    margin-bottom: 2.5vh;
+  }
+
+  p, li { font-size: 1.15vw; line-height: 1.55; color: var(--fg); }
+  .muted { color: var(--muted); }
+
+  .footer {
+    position: absolute;
+    bottom: 1.8vh;
+    left: 6vw;
+    right: 6vw;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 0.75vw;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.65;
+  }
+
+  .kicker { color: var(--accent); font-weight: 600; }
+
+  /* TITLE SLIDE */
+  .slide-title-page {
+    justify-content: center;
+    background: linear-gradient(135deg, #fafaf7 0%, #f0ece4 100%);
+  }
+  .slide-title-page h1 {
+    font-size: 5.8vw;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 2vh;
+  }
+  .slide-title-page .subtitle {
+    font-size: 1.8vw;
+    color: var(--muted);
+    line-height: 1.4;
+    max-width: 80%;
+  }
+  .slide-title-page .meta {
+    margin-top: 5vh;
+    font-size: 1vw;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .slide-title-page .accent-bar {
+    width: 80px;
+    height: 5px;
+    background: var(--accent);
+    margin-bottom: 3vh;
+  }
+
+  /* STAT BLOCKS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2vw;
+    margin-top: 2vh;
+  }
+  .stat {
+    border-left: 3px solid var(--accent);
+    padding-left: 1.2vw;
+  }
+  .stat .num {
+    font-size: 3.5vw;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+  }
+  .stat .label {
+    font-size: 0.95vw;
+    color: var(--muted);
+    margin-top: 0.6vh;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* TWO-COLUMN */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3vw;
+    margin-top: 1vh;
+    flex: 1;
+    min-height: 0;
+  }
+  .col h3 {
+    font-size: 1.2vw;
+    margin-bottom: 1vh;
+    color: var(--blue);
+    letter-spacing: 0.02em;
+  }
+  .col ul { list-style: none; }
+  .col ul li {
+    padding: 0.8vh 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.05vw;
+    line-height: 1.4;
+  }
+  .col ul li:last-child { border-bottom: none; }
+  .col ul li strong { color: var(--fg); font-weight: 600; }
+  .col ul li .meta-line { color: var(--muted); font-size: 0.9vw; display: block; margin-top: 0.2vh; }
+
+  /* CHART CONTAINER */
+  .chart {
+    flex: 1;
+    min-height: 0;
+    margin-top: 1.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chart svg { max-width: 100%; max-height: 100%; }
+
+  /* TABLE-ISH */
+  .data-table {
+    margin-top: 1.5vh;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95vw;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 0.8vh 0.8vw;
+    border-bottom: 2px solid var(--fg);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.78vw;
+    color: var(--muted);
+  }
+  .data-table td {
+    padding: 0.7vh 0.8vw;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .data-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .data-table tr:hover td { background: rgba(169, 29, 58, 0.04); }
+  .pill {
+    display: inline-block;
+    padding: 0.15vh 0.6vw;
+    border-radius: 999px;
+    font-size: 0.75vw;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .pill-active { background: #DCEBE0; color: #1F5638; }
+  .pill-quiet { background: #FAEFD9; color: #7B5610; }
+  .pill-stealth { background: #EAE3F0; color: #4F326B; }
+  .pill-acquired { background: #D9E5F2; color: #163E5C; }
+  .pill-recent { background: #F0F0F0; color: #555; }
+
+  /* HIGHLIGHT CARDS */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5vw;
+    margin-top: 2vh;
+  }
+  .card {
+    background: white;
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    padding: 1.8vh 1.4vw;
+    border-radius: 4px;
+  }
+  .card.blue { border-top-color: var(--blue); }
+  .card.green { border-top-color: var(--green); }
+  .card.amber { border-top-color: var(--amber); }
+  .card h4 {
+    font-size: 1.15vw;
+    font-weight: 700;
+    margin-bottom: 0.5vh;
+    line-height: 1.2;
+  }
+  .card .sub {
+    font-size: 0.85vw;
+    color: var(--muted);
+    margin-bottom: 0.8vh;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .card p {
+    font-size: 0.95vw;
+    line-height: 1.45;
+    color: var(--fg);
+  }
+
+  /* NAV CONTROL */
+  .nav-hint {
+    position: fixed;
+    bottom: 2vh;
+    right: 2vw;
+    font-size: 0.7vw;
+    color: var(--gray);
+    pointer-events: none;
+    z-index: 100;
+  }
+  .progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+    z-index: 200;
+  }
+
+  /* BIG QUOTE / TAKEAWAY */
+  .big-takeaway {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .big-takeaway p {
+    font-size: 2.4vw;
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--fg);
+    max-width: 85%;
+    margin-bottom: 2vh;
+  }
+  .big-takeaway p:last-child {
+    font-size: 1.2vw;
+    color: var(--muted);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    background: linear-gradient(135deg, #fafaf7 0%, #ece6d8 100%);
+    justify-content: center;
+  }
+  .section-divider .section-label {
+    font-size: 1vw;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 2vh;
+  }
+  .section-divider h1 {
+    font-size: 4.8vw;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 2vh;
+    font-weight: 700;
+  }
+  .section-divider .section-desc {
+    font-size: 1.4vw;
+    color: var(--muted);
+    line-height: 1.5;
+    max-width: 75%;
+  }
+  .section-divider .section-count {
+    margin-top: 4vh;
+    font-size: 0.85vw;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* COMPANY DETAIL SLIDE */
+  .company-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.2vh;
+    margin-bottom: 2vh;
+  }
+  .company-header h2 {
+    font-size: 2.8vw;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0.3vh 0 0.5vh;
+    line-height: 1.05;
+  }
+  .company-header .tagline {
+    font-size: 1.15vw;
+    color: var(--muted);
+    line-height: 1.45;
+    max-width: 92%;
+  }
+  .company-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5vw;
+    margin-bottom: 2vh;
+  }
+  .company-meta .item {
+    border-left: 2px solid var(--line);
+    padding-left: 0.9vw;
+  }
+  .company-meta .item .label {
+    font-size: 0.7vw;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 0.3vh;
+  }
+  .company-meta .item .value {
+    font-size: 1vw;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .company-meta .item .value.acquired { color: #163E5C; }
+  .company-meta .item .value.active { color: #1F5638; }
+  .company-meta .item .value.quiet { color: #7B5610; }
+  .company-meta .item .value.stealth { color: #4F326B; }
+  .company-meta .item .value.recent { color: #555; }
+
+  .company-body {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2.8vw;
+    flex: 1;
+    min-height: 0;
+  }
+  .company-news h3,
+  .company-links h3 {
+    font-size: 0.78vw;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 1vh;
+    font-weight: 700;
+  }
+  .company-news ul, .company-links ul { list-style: none; }
+  .company-news li {
+    padding: 0.6vh 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.93vw;
+    line-height: 1.4;
+    display: flex;
+    gap: 1vw;
+  }
+  .company-news li:last-child { border-bottom: none; }
+  .company-news li .date {
+    flex-shrink: 0;
+    width: 5.5vw;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.82vw;
+    letter-spacing: 0.04em;
+  }
+  .company-news li .news-item {
+    flex: 1;
+    color: var(--fg);
+  }
+  .company-links li {
+    padding: 0.4vh 0;
+    font-size: 0.78vw;
+    color: var(--blue);
+    word-break: break-all;
+    line-height: 1.35;
+  }
+  .company-links a {
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(27, 73, 101, 0.25);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .company-links a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .lesson-callout {
+    margin-top: 1.2vh;
+    padding: 1.2vh 1.4vw;
+    background: rgba(27, 73, 101, 0.06);
+    border-left: 3px solid var(--blue);
+    border-radius: 3px;
+  }
+  .lesson-callout .lesson-label {
+    font-size: 0.7vw;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--blue);
+    font-weight: 700;
+    margin-bottom: 0.4vh;
+  }
+  .lesson-callout p {
+    font-size: 0.95vw;
+    line-height: 1.4;
+    color: var(--fg);
+    font-style: italic;
+  }
+
+  /* THREE COL */
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2vw;
+    margin-top: 2vh;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* LIST WITH MARKERS */
+  ul.markered { list-style: none; padding-left: 0; }
+  ul.markered li {
+    padding: 1vh 0;
+    padding-left: 2vw;
+    position: relative;
+    border-bottom: 1px solid var(--line);
+    font-size: 1.05vw;
+    line-height: 1.5;
+  }
+  ul.markered li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* COMPACT LIST */
+  ul.compact { list-style: none; }
+  ul.compact li {
+    padding: 0.6vh 0;
+    font-size: 1.05vw;
+    line-height: 1.4;
+  }
+  ul.compact li strong { color: var(--accent); font-weight: 600; }
+
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <!-- 1: TITLE -->
+  <section class="slide active slide-title-page">
+    <div class="accent-bar"></div>
+    <h1>Ohio TVSF<br>Rounds 31–44</h1>
+    <p class="subtitle">An analysis of 14 evaluator reports from the Technology Validation and Start-Up Fund — Jan 2023 through Apr 2026.</p>
+    <p class="meta">Ohio Third Frontier · Ohio Department of Development</p>
+  </section>
+
+  <!-- 2: WHAT IS TVSF -->
+  <section class="slide">
+    <p class="eyebrow">What is TVSF</p>
+    <h2 class="slide-title">A two-phase commercialization grant program run by Ohio Third Frontier</h2>
+    <p class="lede">Quarterly cycles. Reviewed by Redwood Innovation Partners (Columbus). Active since April 2012.</p>
+
+    <div class="two-col">
+      <div class="col">
+        <h3>Phase 1 — Institutional</h3>
+        <p style="margin-bottom: 1.5vh;">Pools awarded to Ohio research institutions (universities, hospitals, federal labs) to fund proof-of-concept on unlicensed IP.</p>
+        <p class="muted" style="font-size: 0.95vw;">Three sub-options ranging from $100K to $1M+. Recipients spend 12 months running internal validation projects designed to prepare technologies for startup licensing.</p>
+      </div>
+      <div class="col">
+        <h3>Phase 2 — Startup</h3>
+        <p style="margin-bottom: 1.5vh;">Direct grants to Ohio startups commercializing IP licensed from a research institution.</p>
+        <p class="muted" style="font-size: 0.95vw;">Cap rose from $150K to <strong>$200K starting Round 35</strong> (Jan 2024), with up to 20% allowed for personnel. Used for prototype development, pilot deployments, and market validation.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>2 · Program structure</span>
+          </div>
+  </section>
+
+  <!-- 3: SCOPE -->
+  <section class="slide">
+    <p class="eyebrow">Scope of this analysis</p>
+    <h2 class="slide-title">14 quarterly rounds, ~3.3 years, deep cohort visibility</h2>
+    <p class="lede">These reports represent ~35% of the program's lifetime spend ($70.6M cumulative since 2012).</p>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="num">14</div>
+        <div class="label">Round reports analyzed</div>
+      </div>
+      <div class="stat">
+        <div class="num">~196</div>
+        <div class="label">Proposals reviewed</div>
+      </div>
+      <div class="stat">
+        <div class="num">113</div>
+        <div class="label">Awards funded</div>
+      </div>
+      <div class="stat">
+        <div class="num">$24.9M</div>
+        <div class="label">Total recommended</div>
+      </div>
+    </div>
+
+    <div class="stats-row" style="margin-top: 4vh;">
+      <div class="stat">
+        <div class="num" style="font-size: 2.5vw;">Jan 2023</div>
+        <div class="label">First report (R31)</div>
+      </div>
+      <div class="stat">
+        <div class="num" style="font-size: 2.5vw;">Apr 2026</div>
+        <div class="label">Latest report (R44)</div>
+      </div>
+      <div class="stat">
+        <div class="num" style="font-size: 2.5vw;">~78</div>
+        <div class="label">Unique Phase 2 startups</div>
+      </div>
+      <div class="stat">
+        <div class="num" style="font-size: 2.5vw;">~12</div>
+        <div class="label">Phase 1 institutions funded</div>
+      </div>
+    </div>
+
+    <div class="footer"><span>3 · Scope</span></div>
+  </section>
+
+  <!-- 4: FUNDING BY ROUND -->
+  <section class="slide">
+    <p class="eyebrow">Funding cadence</p>
+    <h2 class="slide-title">Round 38 was a one-time scale-up: 8 institutional Phase 1 grants in a single cycle</h2>
+    <p class="lede">Rounds 36 and 38 mark inflection points — cap doubled to $200K in R36, eight Phase 1 cohort funded in R38.</p>
+
+    <div class="chart">
+      <svg viewBox="0 0 1200 480" xmlns="http://www.w3.org/2000/svg">
+        <!-- Y-axis grid -->
+        <g stroke="#d8d4cc" stroke-width="1">
+          <line x1="80" y1="50" x2="1180" y2="50"/>
+          <line x1="80" y1="130" x2="1180" y2="130"/>
+          <line x1="80" y1="210" x2="1180" y2="210"/>
+          <line x1="80" y1="290" x2="1180" y2="290"/>
+          <line x1="80" y1="370" x2="1180" y2="370"/>
+          <line x1="80" y1="420" x2="1180" y2="420" stroke="#1a1a1a" stroke-width="1.5"/>
+        </g>
+        <!-- Y-axis labels -->
+        <g fill="#6b6b6b" font-size="13" font-family="-apple-system, sans-serif" text-anchor="end">
+          <text x="72" y="55">$7M</text>
+          <text x="72" y="135">$5M</text>
+          <text x="72" y="215">$3M</text>
+          <text x="72" y="295">$1M</text>
+          <text x="72" y="375">$0</text>
+        </g>
+        <!-- Bars: R31..R44 ($K), max ~6500 = scaled to 370 height -->
+        <!-- Scale: $K * (370/7000) = $K * 0.0529 -->
+        <!-- bar y = 420 - height -->
+        <g>
+          <rect x="100" y="414.7" width="65" height="5.3" fill="#A91D3A"/>
+          <rect x="180" y="369.8" width="65" height="50.2" fill="#A91D3A"/>
+          <rect x="260" y="361.8" width="65" height="58.2" fill="#A91D3A"/>
+          <rect x="340" y="406.8" width="65" height="13.2" fill="#A91D3A"/>
+          <rect x="420" y="377.7" width="65" height="42.3" fill="#A91D3A"/>
+          <rect x="500" y="279.8" width="65" height="140.2" fill="#A91D3A"/>
+          <rect x="580" y="324.8" width="65" height="95.2" fill="#A91D3A"/>
+          <rect x="660" y="77.5" width="65" height="342.5" fill="#1B4965"/>
+          <rect x="740" y="345.9" width="65" height="74.1" fill="#A91D3A"/>
+          <rect x="820" y="324.8" width="65" height="95.2" fill="#A91D3A"/>
+          <rect x="900" y="358.5" width="65" height="61.5" fill="#A91D3A"/>
+          <rect x="980" y="314.2" width="65" height="105.8" fill="#A91D3A"/>
+          <rect x="1060" y="324.8" width="65" height="95.2" fill="#A91D3A"/>
+          <rect x="1140" y="282.5" width="65" height="137.5" fill="#A91D3A"/>
+        </g>
+        <!-- Bar values -->
+        <g fill="#1a1a1a" font-size="11" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">
+          <text x="132" y="408">100</text>
+          <text x="212" y="362">950</text>
+          <text x="292" y="354">1.1M</text>
+          <text x="372" y="399">250</text>
+          <text x="452" y="370">800</text>
+          <text x="532" y="272">2.65M</text>
+          <text x="612" y="317">1.8M</text>
+          <text x="692" y="69" fill="#1B4965">6.48M</text>
+          <text x="772" y="338">1.4M</text>
+          <text x="852" y="317">1.8M</text>
+          <text x="932" y="350">1.16M</text>
+          <text x="1012" y="307">2.0M</text>
+          <text x="1092" y="317">1.8M</text>
+          <text x="1172" y="275">2.6M</text>
+        </g>
+        <!-- X-axis labels -->
+        <g fill="#6b6b6b" font-size="13" font-family="-apple-system, sans-serif" text-anchor="middle">
+          <text x="132" y="445">R31</text>
+          <text x="212" y="445">R32</text>
+          <text x="292" y="445">R33</text>
+          <text x="372" y="445">R34</text>
+          <text x="452" y="445">R35</text>
+          <text x="532" y="445">R36</text>
+          <text x="612" y="445">R37</text>
+          <text x="692" y="445">R38</text>
+          <text x="772" y="445">R39</text>
+          <text x="852" y="445">R40</text>
+          <text x="932" y="445">R41</text>
+          <text x="1012" y="445">R42</text>
+          <text x="1092" y="445">R43</text>
+          <text x="1172" y="445">R44</text>
+        </g>
+        <text x="630" y="475" fill="#6b6b6b" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-style="italic">
+          Round number (Jan 2023 → Apr 2026)
+        </text>
+      </svg>
+    </div>
+
+    <div class="footer"><span>4 · Funding by round</span></div>
+  </section>
+
+  <!-- 5: APPROVAL RATES -->
+  <section class="slide">
+    <p class="eyebrow">Approval rate volatility</p>
+    <h2 class="slide-title">Reviewer strictness moves in waves — not a steady trend</h2>
+    <p class="lede">Range: 33% (R34, lowest) to 82% (R37, highest). Long-run average ~57% for these 14 rounds vs. 51% program lifetime.</p>
+
+    <div class="chart">
+      <svg viewBox="0 0 1200 460" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid -->
+        <g stroke="#d8d4cc" stroke-width="1">
+          <line x1="80" y1="60" x2="1180" y2="60"/>
+          <line x1="80" y1="140" x2="1180" y2="140"/>
+          <line x1="80" y1="220" x2="1180" y2="220"/>
+          <line x1="80" y1="300" x2="1180" y2="300"/>
+          <line x1="80" y1="380" x2="1180" y2="380" stroke="#1a1a1a" stroke-width="1.5"/>
+        </g>
+        <!-- 51% historical avg line -->
+        <line x1="80" y1="216" x2="1180" y2="216" stroke="#999" stroke-width="1" stroke-dasharray="6,4"/>
+        <text x="1185" y="220" fill="#999" font-size="12" font-family="-apple-system, sans-serif">51% lifetime avg</text>
+
+        <!-- Y labels -->
+        <g fill="#6b6b6b" font-size="13" font-family="-apple-system, sans-serif" text-anchor="end">
+          <text x="72" y="65">100%</text>
+          <text x="72" y="145">75%</text>
+          <text x="72" y="225">50%</text>
+          <text x="72" y="305">25%</text>
+          <text x="72" y="385">0%</text>
+        </g>
+
+        <!-- Line: y = 380 - rate*3.2 -->
+        <!-- R31:50, R32:64, R33:73, R34:33, R35:50, R36:78, R37:82, R38:65, R39:50, R40:59, R41:40, R42:48, R43:50, R44:59 -->
+        <polyline points="
+          135,220 215,175.2 295,146.4 375,274.4 455,220 535,130.4 615,117.6 695,172 775,220 855,191.2 935,252 1015,226.4 1095,220 1175,191.2
+        " fill="none" stroke="#A91D3A" stroke-width="3"/>
+
+        <!-- Points + labels -->
+        <g>
+          <circle cx="135" cy="220" r="6" fill="#A91D3A"/>
+          <circle cx="215" cy="175.2" r="6" fill="#A91D3A"/>
+          <circle cx="295" cy="146.4" r="6" fill="#A91D3A"/>
+          <circle cx="375" cy="274.4" r="6" fill="#A91D3A"/>
+          <circle cx="455" cy="220" r="6" fill="#A91D3A"/>
+          <circle cx="535" cy="130.4" r="6" fill="#A91D3A"/>
+          <circle cx="615" cy="117.6" r="6" fill="#A91D3A"/>
+          <circle cx="695" cy="172" r="6" fill="#A91D3A"/>
+          <circle cx="775" cy="220" r="6" fill="#A91D3A"/>
+          <circle cx="855" cy="191.2" r="6" fill="#A91D3A"/>
+          <circle cx="935" cy="252" r="6" fill="#A91D3A"/>
+          <circle cx="1015" cy="226.4" r="6" fill="#A91D3A"/>
+          <circle cx="1095" cy="220" r="6" fill="#A91D3A"/>
+          <circle cx="1175" cy="191.2" r="6" fill="#A91D3A"/>
+        </g>
+
+        <!-- Value labels above points -->
+        <g fill="#1a1a1a" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">
+          <text x="135" y="208">50%</text>
+          <text x="215" y="163">64%</text>
+          <text x="295" y="134">73%</text>
+          <text x="375" y="262" fill="#A91D3A">33%</text>
+          <text x="455" y="208">50%</text>
+          <text x="535" y="118">78%</text>
+          <text x="615" y="105" fill="#2D6A4F">82%</text>
+          <text x="695" y="160">65%</text>
+          <text x="775" y="208">50%</text>
+          <text x="855" y="179">59%</text>
+          <text x="935" y="240" fill="#A91D3A">40%</text>
+          <text x="1015" y="214">48%</text>
+          <text x="1095" y="208">50%</text>
+          <text x="1175" y="179">59%</text>
+        </g>
+
+        <!-- X labels -->
+        <g fill="#6b6b6b" font-size="13" font-family="-apple-system, sans-serif" text-anchor="middle">
+          <text x="135" y="405">R31</text><text x="215" y="405">R32</text><text x="295" y="405">R33</text><text x="375" y="405">R34</text>
+          <text x="455" y="405">R35</text><text x="535" y="405">R36</text><text x="615" y="405">R37</text><text x="695" y="405">R38</text>
+          <text x="775" y="405">R39</text><text x="855" y="405">R40</text><text x="935" y="405">R41</text><text x="1015" y="405">R42</text>
+          <text x="1095" y="405">R43</text><text x="1175" y="405">R44</text>
+        </g>
+        <text x="630" y="440" fill="#6b6b6b" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-style="italic">
+          Phase 2 approval rate by round
+        </text>
+      </svg>
+    </div>
+
+    <div class="footer"><span>5 · Approval rates</span></div>
+  </section>
+
+  <!-- 6: BUSINESS TYPE -->
+  <section class="slide">
+    <p class="eyebrow">Portfolio composition</p>
+    <h2 class="slide-title">Software/SaaS is now the largest single business-type bucket</h2>
+    <p class="lede">~24% of awardees vs. ~23% therapeutics — a meaningful shift from the program's biomed-heavy history.</p>
+
+    <div class="chart" style="margin-top: 0.5vh;">
+      <svg viewBox="0 0 1200 380" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bars: each row 40px tall; max=21 → scaled to 700px -->
+        <!-- Row format: label, value bar, count -->
+        <g font-family="-apple-system, sans-serif">
+          <!-- Software/SaaS: 21 -->
+          <text x="290" y="35" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Software / SaaS / AI</text>
+          <rect x="300" y="22" width="700" height="22" fill="#1B4965"/>
+          <text x="1010" y="38" font-size="14" fill="#1a1a1a" font-weight="700">21</text>
+
+          <!-- Therapeutics: 18 -->
+          <text x="290" y="75" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Therapeutics</text>
+          <rect x="300" y="62" width="600" height="22" fill="#A91D3A"/>
+          <text x="910" y="78" font-size="14" fill="#1a1a1a" font-weight="700">18</text>
+
+          <!-- Medical devices: 14 -->
+          <text x="290" y="115" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Medical devices</text>
+          <rect x="300" y="102" width="467" height="22" fill="#C75566"/>
+          <text x="777" y="118" font-size="14" fill="#1a1a1a" font-weight="700">14</text>
+
+          <!-- Sensor hardware: 11 -->
+          <text x="290" y="155" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Sensor / chip / instrument</text>
+          <rect x="300" y="142" width="367" height="22" fill="#5A8FAF"/>
+          <text x="677" y="158" font-size="14" fill="#1a1a1a" font-weight="700">11</text>
+
+          <!-- Defense / dual-use: 11 -->
+          <text x="290" y="195" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Defense / dual-use hardware</text>
+          <rect x="300" y="182" width="367" height="22" fill="#2D6A4F"/>
+          <text x="677" y="198" font-size="14" fill="#1a1a1a" font-weight="700">11</text>
+
+          <!-- Diagnostics: 7 -->
+          <text x="290" y="235" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Diagnostics / biotech tools</text>
+          <rect x="300" y="222" width="233" height="22" fill="#B7791F"/>
+          <text x="543" y="238" font-size="14" fill="#1a1a1a" font-weight="700">7</text>
+
+          <!-- Materials/chemicals: 5 -->
+          <text x="290" y="275" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Materials / specialty chemicals</text>
+          <rect x="300" y="262" width="167" height="22" fill="#7B5610"/>
+          <text x="477" y="278" font-size="14" fill="#1a1a1a" font-weight="700">5</text>
+
+          <!-- Other: 2 -->
+          <text x="290" y="315" font-size="14" fill="#1a1a1a" text-anchor="end" font-weight="600">Food/Ag, robotics, other</text>
+          <rect x="300" y="302" width="67" height="22" fill="#999"/>
+          <text x="377" y="318" font-size="14" fill="#1a1a1a" font-weight="700">2</text>
+        </g>
+
+        <text x="600" y="365" fill="#6b6b6b" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-style="italic">
+          Phase 2 awardees classified by business type (n ≈ 78)
+        </text>
+      </svg>
+    </div>
+
+    <div class="footer"><span>6 · Business type</span></div>
+  </section>
+
+  <!-- 7: STATUS MIX -->
+  <section class="slide">
+    <p class="eyebrow">Status of funded startups</p>
+    <h2 class="slide-title">~74% Active, 0 confirmed defunct — but the cohort is too young to call</h2>
+    <p class="lede">Most rounds are under 3 years old. A defensible "did TVSF work?" review needs to revisit Round 31 awardees in 2028+.</p>
+
+    <div class="two-col" style="align-items: center;">
+      <div class="col">
+        <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <!-- Donut: 78 total. Active 58 (74%), Quiet 7 (9%), Stealth 3 (4%), Acquired 1 (1%), Recent 5 (6%), Other 4 (6%) -->
+          <!-- Center origin (160,160), r=130, ring width 60 -->
+          <!-- Calculations: cumulative angles -->
+          <!-- Active 0 → 266.4 deg (74%) -->
+          <!-- Quiet 266.4 → 298.8 (9%) -->
+          <!-- Stealth 298.8 → 313.2 (4%) -->
+          <!-- Acquired 313.2 → 316.8 (1%) -->
+          <!-- Recent 316.8 → 338.4 (6%) -->
+          <!-- Other 338.4 → 360 (6%) -->
+          <g transform="translate(160,160) rotate(-90)">
+            <!-- Active: 74% slice. Use arc with stroke -->
+            <circle r="100" fill="none" stroke="#2D6A4F" stroke-width="50" stroke-dasharray="464.96 628" stroke-dashoffset="0"/>
+            <!-- Quiet: 9% from 74% -->
+            <circle r="100" fill="none" stroke="#B7791F" stroke-width="50" stroke-dasharray="56.55 628" stroke-dashoffset="-464.96"/>
+            <!-- Stealth: 4% -->
+            <circle r="100" fill="none" stroke="#7B4E9E" stroke-width="50" stroke-dasharray="25.13 628" stroke-dashoffset="-521.51"/>
+            <!-- Acquired: 1% -->
+            <circle r="100" fill="none" stroke="#1B4965" stroke-width="50" stroke-dasharray="6.28 628" stroke-dashoffset="-546.64"/>
+            <!-- Recent: 6% -->
+            <circle r="100" fill="none" stroke="#999" stroke-width="50" stroke-dasharray="37.7 628" stroke-dashoffset="-552.92"/>
+            <!-- Other: 6% -->
+            <circle r="100" fill="none" stroke="#cfcfcf" stroke-width="50" stroke-dasharray="37.7 628" stroke-dashoffset="-590.62"/>
+          </g>
+          <text x="160" y="148" text-anchor="middle" font-size="48" font-weight="700" fill="#1a1a1a" font-family="-apple-system, sans-serif">~78</text>
+          <text x="160" y="178" text-anchor="middle" font-size="13" fill="#6b6b6b" font-family="-apple-system, sans-serif" letter-spacing="2">PHASE 2</text>
+          <text x="160" y="196" text-anchor="middle" font-size="13" fill="#6b6b6b" font-family="-apple-system, sans-serif" letter-spacing="2">STARTUPS</text>
+        </svg>
+      </div>
+
+      <div class="col">
+        <ul class="compact" style="margin-top: 0;">
+          <li>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #2D6A4F; vertical-align: middle; margin-right: 0.6vw; border-radius: 2px;"></span>
+            <strong style="color: #2D6A4F;">Active</strong> · 58 (74%)
+            <span class="meta-line muted" style="font-size: 0.85vw; margin-left: 1.6vw;">Live website + activity in last 12 months</span>
+          </li>
+          <li>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #B7791F; vertical-align: middle; margin-right: 0.6vw; border-radius: 2px;"></span>
+            <strong style="color: #B7791F;">Quiet</strong> · 7 (9%)
+            <span class="meta-line muted" style="font-size: 0.85vw; margin-left: 1.6vw;">Web presence but thin signal</span>
+          </li>
+          <li>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #7B4E9E; vertical-align: middle; margin-right: 0.6vw; border-radius: 2px;"></span>
+            <strong style="color: #7B4E9E;">Stealth / Unclear</strong> · 3 (4%)
+            <span class="meta-line muted" style="font-size: 0.85vw; margin-left: 1.6vw;">No public footprint — possibly stealth</span>
+          </li>
+          <li>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #1B4965; vertical-align: middle; margin-right: 0.6vw; border-radius: 2px;"></span>
+            <strong style="color: #1B4965;">Acquired</strong> · 1 (1%)
+            <span class="meta-line muted" style="font-size: 0.85vw; margin-left: 1.6vw;">Lyceum AI → Perceptyx (March 2026)</span>
+          </li>
+          <li>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #999; vertical-align: middle; margin-right: 0.6vw; border-radius: 2px;"></span>
+            <strong style="color: #555;">Recent (R44)</strong> · 5 (6%)
+            <span class="meta-line muted" style="font-size: 0.85vw; margin-left: 1.6vw;">Awarded April 2026 — too early to assess</span>
+          </li>
+          <li>
+            <span style="display: inline-block; width: 14px; height: 14px; background: #cfcfcf; vertical-align: middle; margin-right: 0.6vw; border-radius: 2px;"></span>
+            <strong style="color: #555;">Defunct</strong> · 0 confirmed
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer"><span>7 · Status mix</span></div>
+  </section>
+
+  <!-- 8: NOTABLE WINS -->
+  <section class="slide">
+    <p class="eyebrow">Notable outcomes</p>
+    <h2 class="slide-title">One acquisition + ~$30M in disclosed follow-on raised by ~10 awardees</h2>
+    <p class="lede">Directionally healthy against ~$24.9M deployed, but the dataset is too young to claim ROI conclusions.</p>
+
+    <div class="cards">
+      <div class="card blue">
+        <div class="sub">Exit · March 2026</div>
+        <h4>Lyceum AI</h4>
+        <p>Conversational AI corporate-learning platform "Ellie." Acquired by Perceptyx. R36 awardee. <strong>Only confirmed exit in the dataset.</strong></p>
+      </div>
+      <div class="card">
+        <div class="sub">$28M total raised</div>
+        <h4>Enspire DBS Therapy</h4>
+        <p>Cleveland Clinic spin-out. $17.6M Series B (2023) + $10.3M Series B1 (Jan 2026). RESTORE pivotal trial underway for chronic-stroke motor recovery. R32.</p>
+      </div>
+      <div class="card">
+        <div class="sub">$18.3M total raised</div>
+        <h4>Afference</h4>
+        <p>CWRU spin-out. Neural-haptic ring for digital touch in XR. $15.3M Dec 2025; CES 2024 award. R36.</p>
+      </div>
+      <div class="card green">
+        <div class="sub">FDA · March 2025</div>
+        <h4>CARTx Therapeutics</h4>
+        <p>Nationwide Children's spin-out. FDA "safe to proceed" for first-in-world CAR-NK cancer trial. Off-the-shelf CRISPR/AAV cell therapies. R40.</p>
+      </div>
+      <div class="card green">
+        <div class="sub">DoD-funded trial</div>
+        <h4>Pavaka Wound Care</h4>
+        <p>OSU-licensed electroceutical wound dressing using electric fields to disrupt biofilms. 100-patient DoD trial. Market launch targeted 2027. R40.</p>
+      </div>
+      <div class="card">
+        <div class="sub">Pharma sublicense</div>
+        <h4>NeoIndicate</h4>
+        <p>CWRU spin-out. PTPmu brain-tumor imaging agent sublicensed to ASX-listed Radiopharm Theranostics. Three TVSF awards across distinct projects. R33/R36/R40.</p>
+      </div>
+    </div>
+
+    <div class="footer"><span>8 · Notable outcomes</span></div>
+  </section>
+
+  <!-- 9: TRENDS -->
+  <section class="slide">
+    <p class="eyebrow">Pattern shifts</p>
+    <h2 class="slide-title">Federal-lab IP is now structural, not exceptional</h2>
+    <p class="lede">Roughly a third of Phase 2 awardees license from federal labs — most funneled through the Entrepreneurs' Center (Dayton).</p>
+
+    <div class="three-col">
+      <div class="col">
+        <h3>Federal labs as IP source</h3>
+        <p style="font-size: 1vw; line-height: 1.5;">Air Force Research Laboratory · Naval Surface Warfare Centers (Crane, Dahlgren, Carderock) · Naval Postgraduate School · Army DEVCOM (Armaments / CBC / Soldier Systems) · ERDC · NSA · NASA Ames · NASA Glenn · VA</p>
+        <p style="font-size: 0.95vw; color: var(--muted); margin-top: 1.5vh; font-style: italic;">Mostly Active companies with traction: Raider Tech, Dayton Photonics, Parcell, Hyphen, Vitruvian.</p>
+      </div>
+
+      <div class="col">
+        <h3>Sector mix shifting</h3>
+        <p style="font-size: 1vw; line-height: 1.5;">Historical baseline: ~55% Biomedical/Life Sciences. Recent rounds: <strong>R38 = 21% biomed</strong> (lowest in dataset, 36% Software/IT). R39: 36% biomed.</p>
+        <p style="font-size: 0.95vw; color: var(--muted); margin-top: 1.5vh; font-style: italic;">Evaluators flag this every round, recommending outreach to underrepresented Third Frontier focus areas (Energy, Sensors, Adv. Manufacturing).</p>
+      </div>
+
+      <div class="col">
+        <h3>Reapplication strategy works</h3>
+        <p style="font-size: 1vw; line-height: 1.5;">Many funded companies were previously rejected: Neuright, Raider Tech, Rescue Ventilation, Altered Gravity, Spectrin, Afference, DEB Tech, Volynt, ComHealth, WhichFoodsR, Auxilium, Tactical Triage, Snow Troopers.</p>
+        <p style="font-size: 0.95vw; color: var(--muted); margin-top: 1.5vh; font-style: italic;">Counter-example: A&I Multifunctional Materials needed three tries; CrossLims rejected twice.</p>
+      </div>
+    </div>
+
+    <div class="footer"><span>9 · Pattern shifts</span></div>
+  </section>
+
+  <!-- 10: TOP INSTITUTIONS -->
+  <section class="slide">
+    <p class="eyebrow">Where the IP comes from</p>
+    <h2 class="slide-title">Five Ohio institutions dominate; OSU is the most prolific</h2>
+    <p class="lede">Cleveland State, NEOMED, BGSU, Miami of Ohio, Ohio U, U. Toledo, U. Dayton, Kent State, Wright State appear sporadically.</p>
+
+    <div class="data-table" style="overflow-x: auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Institution</th>
+            <th>Role</th>
+            <th>Notable signal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Ohio State University</strong></td>
+            <td>Most frequent Phase 2 IP source</td>
+            <td>5-of-5 funded in R43; appears in 8+ rounds with multiple proposals</td>
+          </tr>
+          <tr>
+            <td><strong>University of Cincinnati</strong></td>
+            <td>Second most frequent</td>
+            <td>Consistent deal flow; 1819 Venture Lab is a major channel</td>
+          </tr>
+          <tr>
+            <td><strong>Case Western Reserve</strong></td>
+            <td>Strongest biomed pipeline</td>
+            <td>Bisc Therapeutics, NeoIndicate, Visano, WhichFoodsR, Afference</td>
+          </tr>
+          <tr>
+            <td><strong>Nationwide Children's Hospital RI</strong></td>
+            <td>Repeat Phase 1 + biomed startup pipeline</td>
+            <td>Genosera, CARTx, Digital Story Therapies, Clinical Research Delivered</td>
+          </tr>
+          <tr>
+            <td><strong>U. Akron Research Foundation</strong></td>
+            <td>Repeat Phase 1 grantee (R32, R36, R40, R44)</td>
+            <td><strong>Best follow-on metrics:</strong> 15 licenses, ~$21M raised, 2 exits</td>
+          </tr>
+          <tr>
+            <td><strong>Cincinnati Children's</strong></td>
+            <td>Major Phase 1 scale-up in R44</td>
+            <td>$1M Phase 1 Option 2 (largest single award in this 14-round window)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer"><span>10 · Source institutions</span></div>
+  </section>
+
+  <!-- 11: GEOGRAPHY -->
+  <section class="slide">
+    <p class="eyebrow">By geography</p>
+    <h2 class="slide-title">Three hubs absorb most of the awards — SE and NW Ohio underrepresented</h2>
+    <p class="lede">Cleveland-area and Columbus startups together account for ~60% of Phase 2 awardees. Cincinnati and Dayton form the next tier; Athens and Toledo are minimal despite institutional pipelines.</p>
+
+    <div class="two-col">
+      <div class="col">
+        <svg viewBox="0 0 580 480" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
+          <!-- Lake Erie -->
+          <text x="320" y="40" fill="#5A8FAF" font-size="14" font-family="-apple-system, sans-serif" text-anchor="middle" font-style="italic" font-weight="600">Lake Erie</text>
+
+          <!-- Ohio (simplified to a square) -->
+          <rect x="105" y="65" width="405" height="355" rx="4" fill="#f5efe2" stroke="#A91D3A" stroke-width="2.5"/>
+
+          <!-- Cleveland metro / NE Ohio - 22 -->
+          <circle cx="425" cy="135" r="30" fill="#A91D3A" fill-opacity="0.55" stroke="#A91D3A" stroke-width="2"/>
+          <text x="425" y="141" fill="white" font-size="22" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="700">22</text>
+          <text x="425" y="180" fill="#1a1a1a" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">Cleveland metro</text>
+          <text x="425" y="196" fill="#6b6b6b" font-size="10" font-family="-apple-system, sans-serif" text-anchor="middle">+ Akron · Youngstown</text>
+
+          <!-- Columbus - 22 -->
+          <circle cx="305" cy="245" r="30" fill="#A91D3A" fill-opacity="0.55" stroke="#A91D3A" stroke-width="2"/>
+          <text x="305" y="251" fill="white" font-size="22" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="700">22</text>
+          <text x="305" y="295" fill="#1a1a1a" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">Columbus</text>
+
+          <!-- Cincinnati - 13 -->
+          <circle cx="170" cy="380" r="22" fill="#1B4965" fill-opacity="0.55" stroke="#1B4965" stroke-width="2"/>
+          <text x="170" y="386" fill="white" font-size="18" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="700">13</text>
+          <text x="170" y="418" fill="#1a1a1a" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">Cincinnati</text>
+
+          <!-- Dayton - 11 -->
+          <circle cx="215" cy="298" r="20" fill="#1B4965" fill-opacity="0.55" stroke="#1B4965" stroke-width="2"/>
+          <text x="215" y="304" fill="white" font-size="16" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="700">11</text>
+          <text x="215" y="335" fill="#1a1a1a" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">Dayton</text>
+
+          <!-- Athens - 3 -->
+          <circle cx="395" cy="365" r="11" fill="#2D6A4F" fill-opacity="0.6" stroke="#2D6A4F" stroke-width="2"/>
+          <text x="395" y="369" fill="white" font-size="11" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="700">3</text>
+          <text x="395" y="390" fill="#1a1a1a" font-size="11" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">Athens</text>
+
+          <!-- Toledo / BG - 2 -->
+          <circle cx="195" cy="115" r="10" fill="#2D6A4F" fill-opacity="0.6" stroke="#2D6A4F" stroke-width="2"/>
+          <text x="195" y="119" fill="white" font-size="10" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="700">2</text>
+          <text x="195" y="138" fill="#1a1a1a" font-size="11" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">Toledo / BG</text>
+
+          <!-- Legend -->
+          <text x="80" y="465" fill="#6b6b6b" font-size="11" font-family="-apple-system, sans-serif" font-style="italic">
+            Bubble size = number of Phase 2 awardees by region (HQ or licensing institution)
+          </text>
+        </svg>
+      </div>
+
+      <div class="col">
+        <ul class="compact" style="margin-top: 0;">
+          <li style="padding: 0.7vh 0;">
+            <strong style="color: #A91D3A; font-size: 1.1vw;">Cleveland metro · 22 startups</strong>
+            <span class="meta-line muted" style="font-size: 0.9vw; line-height: 1.4; display: block; margin-top: 0.3vh;">5 Phase 1 institutions (CWRU, Cleveland Clinic, UH, UARF, NEOMED). Most diverse cohort. <em>Enspire DBS · Afference · Bisc · NeoIndicate · Visano · Auxilium</em>.</span>
+          </li>
+          <li style="padding: 0.7vh 0;">
+            <strong style="color: #A91D3A; font-size: 1.1vw;">Columbus · 22 startups</strong>
+            <span class="meta-line muted" style="font-size: 0.9vw; line-height: 1.4; display: block; margin-top: 0.3vh;">2 Phase 1 institutions (OSU, Nationwide Children's RI). Rev1 Ventures is the dominant ESP. <em>CARTx · Pavaka · Genosera · OncoMechanics · Tactical Triage</em>.</span>
+          </li>
+          <li style="padding: 0.7vh 0;">
+            <strong style="color: #1B4965; font-size: 1.1vw;">Cincinnati · 13 startups</strong>
+            <span class="meta-line muted" style="font-size: 0.9vw; line-height: 1.4; display: block; margin-top: 0.3vh;">3 Phase 1 institutions (UC, CCHMC, Bon Secours/Mercy). UC 1819 Venture Lab is the main pipeline. <em>ComfortCath · MetaMol · Meteora3D · RNA Nano · LittleSeed</em>.</span>
+          </li>
+          <li style="padding: 0.7vh 0;">
+            <strong style="color: #1B4965; font-size: 1.1vw;">Dayton / Miami Valley · 11 startups</strong>
+            <span class="meta-line muted" style="font-size: 0.9vw; line-height: 1.4; display: block; margin-top: 0.3vh;">1 Phase 1 institution (Parallax). Heaviest concentration of federal-lab IP via the Entrepreneurs' Center. <em>Hyphen · Dayton Photonics · BowerBags · Nabu · CAPV</em>.</span>
+          </li>
+          <li style="padding: 0.7vh 0;">
+            <strong style="color: #2D6A4F; font-size: 1.1vw;">Athens / SE Ohio · 3 startups</strong>
+            <span class="meta-line muted" style="font-size: 0.9vw; line-height: 1.4; display: block; margin-top: 0.3vh;">No Phase 1 institutions. Ohio U pipeline. <em>ASAKE Biotechnology · Resilient Medical · Vitruvian</em>.</span>
+          </li>
+          <li style="padding: 0.7vh 0;">
+            <strong style="color: #2D6A4F; font-size: 1.1vw;">Toledo / NW Ohio · 1–2 startups</strong>
+            <span class="meta-line muted" style="font-size: 0.9vw; line-height: 1.4; display: block; margin-top: 0.3vh;">1 Phase 1 institution (BGSU, first-time R44). <em>Altered Gravity · Avani/Plastinuva</em> (UToledo origins).</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer"><span>11 · By geography</span></div>
+  </section>
+
+  <!-- 12: NW OHIO DRILL-DOWN -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio drill-down</p>
+    <h2 class="slide-title">$500K total — ~2% of program spend across 14 rounds</h2>
+    <p class="lede">R35 (Jan 2024) was the high-water mark: University of Toledo went 2-for-2. BGSU's R44 award is the first NW Ohio institutional Phase 1 grant in this window.</p>
+
+    <div class="stats-row" style="margin-top: 1vh;">
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="label">Awards funded</div>
+      </div>
+      <div class="stat">
+        <div class="num">~$500K</div>
+        <div class="label">Total recommended</div>
+      </div>
+      <div class="stat">
+        <div class="num">~2%</div>
+        <div class="label">Of $24.9M program spend</div>
+      </div>
+      <div class="stat">
+        <div class="num">~4</div>
+        <div class="label">Unsuccessful submissions</div>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top: 2.5vh; flex: 1; min-height: 0;">
+      <div class="col">
+        <h3 style="color: #2D6A4F;">Funded</h3>
+        <table class="data-table" style="margin-top: 1vh;">
+          <thead>
+            <tr>
+              <th style="width: 12%;">Round</th>
+              <th>Recipient · Product</th>
+              <th style="width: 18%;">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>R35</strong><br><span class="muted" style="font-size: 0.78vw;">Jan 2024</span></td>
+              <td>
+                <strong>Altered Gravity, LLC</strong> — $200K, Phase 2<br>
+                <span class="muted" style="font-size: 0.85vw;">UToledo spin-out · Random-positioning machine for partial/microgravity research (ex vivo tissue, drug-efficacy testing)</span>
+              </td>
+              <td><span class="pill pill-active">Active</span></td>
+            </tr>
+            <tr>
+              <td><strong>R35</strong><br><span class="muted" style="font-size: 0.78vw;">Jan 2024</span></td>
+              <td>
+                <strong>Avani Enterprizes / Plastinuva</strong> — $200K, Phase 2<br>
+                <span class="muted" style="font-size: 0.85vw;">UToledo IP · Solvent–antisolvent polypropylene recycling — rebranded 2026 at Akron Bounce</span>
+              </td>
+              <td><span class="pill pill-active">Active</span></td>
+            </tr>
+            <tr>
+              <td><strong>R44</strong><br><span class="muted" style="font-size: 0.78vw;">Apr 2026</span></td>
+              <td>
+                <strong>Bowling Green State University</strong> — $100K, Phase 1<br>
+                <span class="muted" style="font-size: 0.85vw;">First-time grantee · Tech Validation & Pre-Commercialization Program · Adv. materials / manufacturing / sensors · 20+ licensable techs</span>
+              </td>
+              <td><span class="pill pill-recent">Recent</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col">
+        <h3 style="color: #B7791F;">Applied but not funded</h3>
+        <table class="data-table" style="margin-top: 1vh;">
+          <thead>
+            <tr>
+              <th style="width: 14%;">Round</th>
+              <th>Applicant · Product</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>R33</strong><br><span class="muted" style="font-size: 0.75vw;">Jul 2023</span></td>
+              <td><strong>Altered Gravity, LLC</strong> (UToledo) · First attempt — succeeded on retry R35</td>
+            </tr>
+            <tr>
+              <td><strong>R39</strong><br><span class="muted" style="font-size: 0.75vw;">Jan 2025</span></td>
+              <td><strong>MiniOrtho Inc.</strong> (UToledo) · SAFFRS ankle-fracture fixation device</td>
+            </tr>
+            <tr>
+              <td><strong>R42</strong><br><span class="muted" style="font-size: 0.75vw;">Oct 2025</span></td>
+              <td><strong>BG Biologics LLC</strong> (BGSU) · PythiumX biocontrol for hydroponic greenhouses</td>
+            </tr>
+            <tr>
+              <td><strong>R42</strong><br><span class="muted" style="font-size: 0.75vw;">Oct 2025</span></td>
+              <td><strong>Cardinex LLC</strong> (UToledo) · One-Step Aortic Punch for CABG surgery</td>
+            </tr>
+            <tr>
+              <td><strong>R42</strong><br><span class="muted" style="font-size: 0.75vw;">Oct 2025</span></td>
+              <td><strong>MiniOrtho Inc.</strong> (UToledo) · Second rejection (same SAFFRS project)</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="footer"><span>12 · Northwest Ohio</span></div>
+  </section>
+
+  <!-- 13: NW OHIO OBSERVATIONS -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio · Observations</p>
+    <h2 class="slide-title">A small footprint with structural causes — and a few bright spots</h2>
+    <p class="lede">Six findings from the NW Ohio dataset — a diagnosis of why the regional share is small and what would change it.</p>
+
+    <div class="cards" style="grid-template-columns: repeat(3, 1fr); grid-auto-rows: 1fr; gap: 1.4vw; flex: 1; min-height: 0; margin-top: 1vh;">
+      <div class="card">
+        <div class="sub">01 · Doubly under-represented</div>
+        <h4>3.6% of applications, 2% of dollars</h4>
+        <p>Only 7 of 196 program-wide applications came from NW Ohio. Of those, 3 were funded — a 43% acceptance rate vs. the 58% portfolio average. Total $500K out of $24.9M deployed.</p>
+      </div>
+
+      <div class="card">
+        <div class="sub">02 · Concentrated in 2 rounds</div>
+        <h4>R35 and R44 — nothing in between</h4>
+        <p>All NW Ohio funding flowed in just two rounds: R35 (Jan 2024, $400K to UToledo) and R44 (Apr 2026, $100K to BGSU). Eight consecutive rounds R36–R43 saw zero NW Ohio awards — a ~2-year drought.</p>
+      </div>
+
+      <div class="card amber">
+        <div class="sub">03 · Sector tunnel vision</div>
+        <h4>6 of 7 applications are Biomed/Life Sciences</h4>
+        <p>No therapeutics. No diagnostics. No SaaS. No sensors. No federal-lab-licensed startups. Avani/Plastinuva (Advanced Materials, plastic recycling) is the only diversifier across all 14 rounds.</p>
+      </div>
+
+      <div class="card green">
+        <div class="sub">04 · Funded startups are thriving</div>
+        <h4>100% Active — but value is leaking</h4>
+        <p>Both R35 awardees (Altered Gravity, Avani/Plastinuva) still Active 2+ years post-grant — outperforming the 74% portfolio average. <strong>However:</strong> Avani rebranded to Plastinuva and relocated to Akron Bounce. The standout success now sits in NE Ohio.</p>
+      </div>
+
+      <div class="card blue">
+        <div class="sub">05 · ESP infrastructure gap</div>
+        <h4>No Toledo-area equivalent of Rev1 / EC / JumpStart</h4>
+        <p>BG Biologics flagged "no ESP." Cardinex got "limited help from UToledo Business Incubator." Cleveland has Bounce/JumpStart, Columbus has Rev1, Dayton has the Entrepreneurs' Center, Cincinnati has UC's 1819 Venture Lab. NW Ohio lacks comparable commercialization muscle.</p>
+      </div>
+
+      <div class="card blue">
+        <div class="sub">06 · Phase 1 pipeline = BGSU only</div>
+        <h4>UToledo has never applied as a Phase 1 grantee</h4>
+        <p>Despite being the IP source for 5 of 7 NW Ohio Phase 2 applications, the University of Toledo has never sought Phase 1 institutional funding in this window. BGSU's R44 award is the only NW Ohio Phase 1 grant — and a first-time application.</p>
+      </div>
+    </div>
+
+    <div class="footer"><span>13 · NW Ohio observations</span></div>
+  </section>
+
+  <!-- 14: QUIET FLAGS -->
+  <section class="slide">
+    <p class="eyebrow">The canary</p>
+    <h2 class="slide-title">10 awardees (~13%) have thin or no public footprint</h2>
+    <p class="lede">Worth verifying in any program-effectiveness review. If a subset surfaces as defunct in 12–24 months, total failure rate would still be well under early-stage tech norms (50–70%).</p>
+
+    <div class="data-table">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 22%;">Company</th>
+            <th style="width: 14%;">Round</th>
+            <th>Status flag</th>
+            <th>Domain</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>PHOPE</strong></td>
+            <td>R33</td>
+            <td><span class="pill pill-stealth">Unclear</span></td>
+            <td>No clear public footprint linked to TVSF; sole hit is unrelated Reg-D filing</td>
+          </tr>
+          <tr>
+            <td><strong>Spectrin</strong></td>
+            <td>R36</td>
+            <td><span class="pill pill-quiet">Quiet</span></td>
+            <td>AAV gene therapy for tuberous sclerosis (NCH-linked)</td>
+          </tr>
+          <tr>
+            <td><strong>Reglia Therapeutics</strong></td>
+            <td>R36</td>
+            <td><span class="pill pill-quiet">Quiet</span></td>
+            <td>Small molecule for neurodegeneration (CWRU-derived)</td>
+          </tr>
+          <tr>
+            <td><strong>The Science & Engineering Corps</strong></td>
+            <td>R35</td>
+            <td><span class="pill pill-quiet">Quiet</span></td>
+            <td>Undisclosed dual-use defense product</td>
+          </tr>
+          <tr>
+            <td><strong>LAACClamp</strong></td>
+            <td>R37</td>
+            <td><span class="pill pill-stealth">Stealth</span></td>
+            <td>Implantable left atrial appendage clamp (OSU-licensed)</td>
+          </tr>
+          <tr>
+            <td><strong>Zafer Therapeutics</strong></td>
+            <td>R37</td>
+            <td><span class="pill pill-stealth">Stealth</span></td>
+            <td>Cell therapy preventing organ failure in autoimmune disease</td>
+          </tr>
+          <tr>
+            <td><strong>DEB Technologies</strong></td>
+            <td>R38</td>
+            <td><span class="pill pill-quiet">Quiet</span></td>
+            <td>VA-invented assistive device for limited leg strength</td>
+          </tr>
+          <tr>
+            <td><strong>Visual Detection Systems</strong></td>
+            <td>R36</td>
+            <td><span class="pill pill-quiet">Quiet</span></td>
+            <td>Handheld first-responder threat detection</td>
+          </tr>
+          <tr>
+            <td><strong>Medical Interface Solutions</strong></td>
+            <td>R33</td>
+            <td><span class="pill pill-quiet">Quiet</span></td>
+            <td>Pre-hospital stroke detection (UC-developed)</td>
+          </tr>
+          <tr>
+            <td><strong>S&J Nanochemicals</strong></td>
+            <td>R32</td>
+            <td><span class="pill pill-quiet">Quiet</span></td>
+            <td>Nanoformulated liquid fertilizers</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer"><span>14 · Watch list</span></div>
+  </section>
+
+  <!-- 15: WEAK CRITERIA -->
+  <section class="slide">
+    <p class="eyebrow">Persistent evaluation gaps</p>
+    <h2 class="slide-title">Business Model and Management Team are the lowest-rated criteria — every round</h2>
+    <p class="lede">IP Protection, Proof of Concept, and Growth-Plan-in-Ohio are consistently the strongest. The pattern is so consistent it's now a structural recommendation.</p>
+
+    <div class="two-col">
+      <div class="col">
+        <h3>Strongest categories (every round)</h3>
+        <ul class="markered">
+          <li><strong>IP Protection</strong> — usually 80%+ "meets or exceeds"</li>
+          <li><strong>Proof of Concept</strong> — strong customer/data validation</li>
+          <li><strong>Growth Plan in Ohio</strong> — applicants tightly aligned with state job/growth requirements</li>
+          <li><strong>Project Plan / Budget</strong> — typically clean and 12-month-aligned</li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h3>Weakest categories (every round)</h3>
+        <ul class="markered">
+          <li><strong>Business Model</strong> — Round 26 hit 28% "meets or exceeds"; rolling avg ~64%</li>
+          <li><strong>Management Team</strong> — frequently lacks business/fundraising experience</li>
+          <li><strong>Investor / Partner Engagement</strong> — many founders haven't lined up downstream capital</li>
+          <li><strong>ESP Interaction</strong> — lack of engagement with Entrepreneurs' Service Providers is a recurring red flag</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="margin-top: 2vh; font-size: 1vw; color: var(--muted); font-style: italic; max-width: 90%;">Standing Redwood recommendation: applicants should add business/fundraising experience to technically-strong founder rosters and engage their ESP earlier in proposal development.</p>
+
+    <div class="footer"><span>15 · Evaluation gaps</span></div>
+  </section>
+
+  <!-- 16: WHAT REPORTS DON'T TELL US -->
+  <section class="slide">
+    <p class="eyebrow">The data gap</p>
+    <h2 class="slide-title">These reports don't measure outcomes — they're evaluator deliverables</h2>
+    <p class="lede">The reports describe who got funded and why. They tell you almost nothing about whether funded companies subsequently succeeded.</p>
+
+    <div class="two-col">
+      <div class="col">
+        <h3>What the reports cover well</h3>
+        <ul class="markered">
+          <li>Per-round funding amounts and approval rates</li>
+          <li>Awardee/applicant lists with project descriptions</li>
+          <li>Technology source institutions</li>
+          <li>Sector breakdowns and cumulative program totals</li>
+          <li>Reapplication and Phase 1 carry-through tracking</li>
+        </ul>
+      </div>
+
+      <div class="col">
+        <h3>What's missing</h3>
+        <ul class="markered">
+          <li>Post-grant company performance data</li>
+          <li>Follow-on funding raised by awardees</li>
+          <li>Job creation, revenue, or commercialization milestones</li>
+          <li>Failure / dormancy / dissolution tracking</li>
+          <li>Phase 1 → Phase 2 → market progression metrics</li>
+        </ul>
+        <p style="margin-top: 1.5vh; font-size: 0.95vw; color: var(--muted); font-style: italic;">UARF's self-reported $21M raised across 15 licenses with 2 exits is the only substantive follow-on metric in 14 reports.</p>
+      </div>
+    </div>
+
+    <div class="footer"><span>16 · Reporting gaps</span></div>
+  </section>
+
+  <!-- 17: SECTION — FEATURED COMPANIES -->
+  <section class="slide section-divider">
+    <p class="section-label">Part 2 · Featured companies</p>
+    <h1>The cohort up close</h1>
+    <p class="section-desc">28 individual companies and institutions: marquee successes, every Northwest Ohio applicant, and 14 comparables relevant to NWO ecosystem strategy.</p>
+    <p class="section-count">Slides 17 → 47</p>
+    <div class="footer"><span>17 · Featured companies</span></div>
+  </section>
+
+  <!-- 18: LYCEUM AI -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · Acquired</p>
+    <div class="company-header">
+      <h2>Lyceum AI</h2>
+      <p class="tagline">Conversational AI learning agent "Ellie" that turns static training into personalized, verifiable skill-building. Cintrifuse Venture Velocity program graduate.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">AI · Corporate L&amp;D</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R36 · Apr 2024</div></div>
+      <div class="item"><div class="label">Status</div><div class="value acquired">Acquired</div></div>
+      <div class="item"><div class="label">Disclosed funding</div><div class="value">~$450K pre-acquisition</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Mar 2026</span><span class="news-item">Acquired by Perceptyx — first exit from Cintrifuse Venture Velocity program (terms undisclosed); &lt;2 years post-launch.</span></li>
+          <li><span class="date">2025</span><span class="news-item">Closed pre-seed (~$450K) led by Cintrifuse; angels include Hurricane Ventures, Fortysix VC, Perceptyx.</span></li>
+          <li><span class="date">Apr 2024</span><span class="news-item">Awarded Ohio TVSF Round 36.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>lyceum.ai</li>
+          <li>blog.perceptyx.com/perceptyx-acquires-learning-platform-lyceum-ai</li>
+          <li>cintrifuse.com/lyceum-ai-acquired-by-perceptyx</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>18 · Lyceum AI</span></div>
+  </section>
+
+  <!-- 19: ENSPIRE DBS -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · Late-stage clinical</p>
+    <div class="company-header">
+      <h2>Enspire DBS Therapy</h2>
+      <p class="tagline">Cleveland Clinic spinout pairing deep brain stimulation with structured rehab to restore arm/hand function in chronic stroke patients. RESTORE pivotal trial across 9 centers.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Neuromod · Med device</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R32 · Apr 2023</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Funding raised</div><div class="value">$28M+ disclosed</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Jan 2026</span><span class="news-item">$10.3M Series B1 led by Genesys Capital with Cleveland Clinic and JobsOhio Ventures.</span></li>
+          <li><span class="date">Feb 2025</span><span class="news-item">First patient implanted at second RESTORE site; Phase 2/3 trial expanded to 9 centers (Cleveland Clinic, Mayo, Mass General, Brown, MUSC). Interim readout mid-2027.</span></li>
+          <li><span class="date">2023</span><span class="news-item">Phase I (EDEN) results published showing motor recovery signal in chronic stroke.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>enspiredbs.com</li>
+          <li>prnewswire.com/news-releases/enspire-dbs-therapy-announces-10-3-million-series-b1</li>
+          <li>biospace.com/press-releases/enspire-dbs-therapy-announces-the-first-patient</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>19 · Enspire DBS Therapy</span></div>
+  </section>
+
+  <!-- 20: AFFERENCE -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · Large raise</p>
+    <div class="company-header">
+      <h2>Afference</h2>
+      <p class="tagline">CWRU Human Fusions Initiative spinout. Wearable neural-stimulation ring lets users feel digital objects in AR/VR/XR, surgical robotics, and teleoperation.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Neural haptics · XR</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R36 · Apr 2024</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Funding raised</div><div class="value">~$18.3M disclosed</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Dec 2025</span><span class="news-item">$15.3M Series B led by Konvoy with Hannah Grey VC, Samsung Next, Space Capital.</span></li>
+          <li><span class="date">Jan 2025</span><span class="news-item">Afference Ring debuted at CES 2025 as a reference design for OEM integration.</span></li>
+          <li><span class="date">Jan 2024</span><span class="news-item">Won CES 2024 Innovation Award for Phantom Glove.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>afference.io</li>
+          <li>ramaonhealthcare.com/afference-raises-1-5m-to-develop-wearable-neural-interface</li>
+          <li>pitchbook.com/profiles/company/528588-55</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>20 · Afference</span></div>
+  </section>
+
+  <!-- 21: CARTx THERAPEUTICS -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · FDA milestone</p>
+    <div class="company-header">
+      <h2>CARTx Therapeutics</h2>
+      <p class="tagline">Nationwide Children's Hospital spinout. Off-the-shelf CRISPR/AAV-engineered universal-donor CAR-NK and gd-T cell therapies for blood cancers and T-cell malignancies.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Cell &amp; gene therapy</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R40 · Apr 2025</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Funding</div><div class="value">TVSF + NCH backed</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Aug 2025</span><span class="news-item">First-in-human Phase 1 of CD33 CAR-NK in AML opened enrollment at Nationwide Children's. CD38KO/CD38-CAR gd-T cells preprint posted.</span></li>
+          <li><span class="date">Apr 2025</span><span class="news-item">Awarded Ohio TVSF Round 40.</span></li>
+          <li><span class="date">Mar 2025</span><span class="news-item">FDA "safe-to-proceed" granted on universal-donor CAR-NK platform.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>cartx.health</li>
+          <li>nationwidechildrens.org/newsroom/news-releases/2025/03/univ_car-nk_safeproceed</li>
+          <li>pediatricsnationwide.org/2025/09/15/universal-donor-car-nk-cells</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>21 · CARTx Therapeutics</span></div>
+  </section>
+
+  <!-- 22: PAVAKA WOUND CARE -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · DoD-funded trial</p>
+    <div class="company-header">
+      <h2>Pavaka Wound Care</h2>
+      <p class="tagline">OSU-licensed electroceutical wound dressing. Battery-powered silk-printed electrode generates hypochlorous acid to disrupt biofilms in drug-resistant wound infections.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Med device · Wound care</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R40 · Apr 2025</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Disclosed</div><div class="value">$2M DoD trial</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Aug 2025</span><span class="news-item">Joined Rev1 Ventures' Customer to Capital cohort; pivotal blinded clinical study in development.</span></li>
+          <li><span class="date">Apr 2025</span><span class="news-item">Awarded Ohio TVSF Round 40.</span></li>
+          <li><span class="date">Jan 2025</span><span class="news-item">Exclusive license signed with OSU; PLOS One publication validating efficacy in P. aeruginosa-infected wounds. Market launch targeted 2027.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>rev1ventures.com/blog/shocking-infections-how-pavaka-is-using-electric-fields</li>
+          <li>mae.osu.edu/news/2025/01/lab-life-electroceutical-innovation-wound-care</li>
+          <li>journals.plos.org/plosone/article?id=10.1371/journal.pone.0331785</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>22 · Pavaka Wound Care</span></div>
+  </section>
+
+  <!-- 23: NEOINDICATE -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · Pharma sublicense</p>
+    <div class="company-header">
+      <h2>NeoIndicate</h2>
+      <p class="tagline">CWRU spinout. PTPmu-targeted PET imaging and chimeric-antibody radiotheranostics for glioblastoma and other solid tumors. Three TVSF awards across distinct projects.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Radiopharm · Theranostics</div></div>
+      <div class="item"><div class="label">Rounds</div><div class="value">R33 · R36 · R40</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active (quiet PR)</div></div>
+      <div class="item"><div class="label">Deal</div><div class="value">Radiopharm sublicense</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">2025</span><span class="news-item">Awarded TVSF Round 40 (third TVSF award after R33/R36); continued preclinical work on chimeric-antibody theranostics.</span></li>
+          <li><span class="date">2023</span><span class="news-item">Near-infrared PTPmu imaging agent comparison published (Molecular Imaging and Biology).</span></li>
+          <li><span class="date">Jun 2022</span><span class="news-item">CWRU exclusive sublicense to ASX-listed Radiopharm Theranostics for PTPmu radiopharmaceutical; Phase 1 GBM studies targeted.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>neoindicate.com</li>
+          <li>prnewswire.com/news-releases/rad-adds-brain-tumor-technology-to-portfolio</li>
+          <li>thedaily.case.edu/case-western-reserve-neoindicate-llc-sign-license-agreement</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>23 · NeoIndicate</span></div>
+  </section>
+
+  <!-- 24: BRANDRANK.AI -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · Enterprise SaaS</p>
+    <div class="company-header">
+      <h2>BrandRank.AI</h2>
+      <p class="tagline">Cincinnati B2B SaaS. Cloud platform monitoring, analyzing, and optimizing brand visibility across generative-AI answer engines. Enterprise customers include Nestlé and Council of BBBs.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">SaaS · GenAI brand intel</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R38 · Oct 2024</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Funding raised</div><div class="value">~$1.2M seed + debt</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Jul 2025</span><span class="news-item">Convertible debt round (terms undisclosed); PitchBook estimates ~$3M cumulative raised.</span></li>
+          <li><span class="date">2025</span><span class="news-item">Six early enterprise customers including Nestlé and Council of Better Business Bureaus; pipeline of 12+ brands.</span></li>
+          <li><span class="date">Q4 2024</span><span class="news-item">$1.2M seed/angel led by Mercury Fund and Sandberg Bernthal Venture Partners; angels include former P&amp;G CEO John Pepper.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>brandrank.ai</li>
+          <li>finance.yahoo.com/news/brandrank-ai-secures-1-2-120000476.html</li>
+          <li>ohiotechnews.com/cincinnatis-brandrankai-raises-1-million-seed</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>24 · BrandRank.AI</span></div>
+  </section>
+
+  <!-- 25: AUXILIUM HEALTH -->
+  <section class="slide">
+    <p class="eyebrow">Marquee notable · Two TVSF wins</p>
+    <div class="company-header">
+      <h2>Auxilium Health</h2>
+      <p class="tagline">UAkron spinout. Color-changing, anti-biofilm biomaterial dressings combining therapeutic delivery and infection diagnostics for diabetic foot ulcers. FDA submission targeted 2026.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Med device · Wound care</div></div>
+      <div class="item"><div class="label">Rounds</div><div class="value">R36 · R41</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Funding raised</div><div class="value">~$2M disclosed</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Jul 2025</span><span class="news-item">Awarded TVSF Round 41 (second TVSF award).</span></li>
+          <li><span class="date">2025</span><span class="news-item">$275K NSF SBIR Phase I awarded; relocated to Cleveland Clinic's Global Cardiovascular Innovation Center; targeting 2026 FDA submission, 2027 launch.</span></li>
+          <li><span class="date">2025</span><span class="news-item">$1.5M pre-seed + $200K Ohio Department of Development grant. Founder Isaiah Kaiser (UAkron PhD '23).</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>auxiliumhealth.xyz</li>
+          <li>crainscleveland.com/health-care/auxilium-health-secures-15-million-pre-seed-funding</li>
+          <li>uakron.edu/im/news/ua-alumnus-finding-early-success-with-business</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>25 · Auxilium Health</span></div>
+  </section>
+
+  <!-- 26: SECTION — NW OHIO COMPANIES -->
+  <section class="slide section-divider">
+    <p class="section-label">Part 3 · Northwest Ohio</p>
+    <h1>Every NW Ohio applicant</h1>
+    <p class="section-desc">All 6 entities that applied for TVSF funding from Northwest Ohio across 14 rounds — funded and rejected. The complete regional pipeline.</p>
+    <p class="section-count">Slides 26 → 32</p>
+    <div class="footer"><span>26 · Northwest Ohio companies</span></div>
+  </section>
+
+  <!-- 27: ALTERED GRAVITY -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio · Funded R35</p>
+    <div class="company-header">
+      <h2>Altered Gravity, LLC</h2>
+      <p class="tagline">UToledo spinout. Random-positioning machine ("Biomimetic Engineered Space Technology") simulating partial/microgravity (LEO, Moon, Mars) for ex vivo tissue and drug-efficacy testing.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Bioengineering · Research instrument</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R35 · Jan 2024 · $200K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value quiet">Quiet (post-funding)</div></div>
+      <div class="item"><div class="label">Founders</div><div class="value">Yildirim-Ayan · Ayan</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Mar 2024</span><span class="news-item">UToledo News announces $200K TVSF Round 35 award; founders profiled.</span></li>
+          <li><span class="date">2022</span><span class="news-item">NSF Partnerships for Innovation – Technology Translation grant.</span></li>
+          <li><span class="date">2021</span><span class="news-item">NSF I-Corps entrepreneurial training. Rocket Innovations + UToledo Business Incubator backing; Norm Rapino advising.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>news.utoledo.edu/index.php/03_27_2024/utoledo-engineers-to-advance-partial-gravity-research</li>
+          <li>utoledo.edu/rocketinnovations</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>27 · Altered Gravity</span></div>
+  </section>
+
+  <!-- 28: PLASTINUVA (AVANI) -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio · Funded R35 · Most public traction</p>
+    <div class="company-header">
+      <h2>Avani Enterprizes / Plastinuva</h2>
+      <p class="tagline">UToledo IP. Patent-pending solvent-antisolvent process separates polypropylene from mixed waste streams, producing virgin-quality powder with ~80% lower carbon footprint than petroleum PP. Mayo Clinic supply partnership.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Advanced materials · Recycling</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R35 · Jan 2024 · $200K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Notable</div><div class="value">Rebranded 2026</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Jan 2026</span><span class="news-item">Rebrand to Plastinuva; Mayo Clinic supply partnership; scaling 1 lb → 10 lb → 100 lb batches.</span></li>
+          <li><span class="date">Sep 2025</span><span class="news-item">Selected for Bounce Innovation Hub's Synthe6 Materials Accelerator (Akron); $25K non-dilutive + $20K services.</span></li>
+          <li><span class="date">Nov 2024</span><span class="news-item">Won $10K first place at UToledo Tech419 Pitch Competition.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>plastinuva.com</li>
+          <li>news.utoledo.edu/index.php/01_14_2026/plastic-recycling-startup-builds-on-utoledo-developed-technology</li>
+          <li>ohiotechnews.com/akrons-polymer-bet-first-startups-join-synthe6-accelerator</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>28 · Plastinuva (Avani)</span></div>
+  </section>
+
+  <!-- 29: BGSU -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio · Phase 1 · Recent</p>
+    <div class="company-header">
+      <h2>Bowling Green State University</h2>
+      <p class="tagline">First-ever TVSF Phase 1 award. BGSU Tech Validation &amp; Pre-Commercialization Program — internal sub-grants for advanced materials, manufacturing, and sensor IP. Managed by the Hooker Center for Entrepreneurial Leadership.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">University tech-transfer</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R44 · Apr 2026 · $100K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value recent">Recent (newly funded)</div></div>
+      <div class="item"><div class="label">Notable</div><div class="value">First-time grantee</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Apr 2026</span><span class="news-item">TVSF Round 44 evaluator report recommends BGSU's $100K Phase 1 application; "modest but appropriate" first-year scope.</span></li>
+          <li><span class="date">2026</span><span class="news-item">BGSU posts $11.3M in 49 grants overall. Hooker Center director David Uhlenhake named program manager.</span></li>
+          <li><span class="date">2026</span><span class="news-item">BGSU breaks ground on Technology Engineering Innovation Center.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>bgsu.edu/research-economic-development/technology-transfer-services.html</li>
+          <li>bgsu.edu/center-for-entrepreneurial-leadership.html</li>
+          <li>bgindependentmedia.org/bgsu-defies-national-trend-by-securing-healthy-grant-funding-for-2026</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>29 · BGSU TVSF Program</span></div>
+  </section>
+
+  <!-- 30: MINIORTHO -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio · Rejected R39 + R42</p>
+    <div class="company-header">
+      <h2>MiniOrtho Inc.</h2>
+      <p class="tagline">UToledo-licensed orthopedic device. SAFFRS — Syndesmotic Ankle Fracture Fixation &amp; Reconstruction System. Two consecutive TVSF rejections, no public footprint identified.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Orthopedic med device</div></div>
+      <div class="item"><div class="label">Rounds applied</div><div class="value">R39 · R42</div></div>
+      <div class="item"><div class="label">Status</div><div class="value stealth">Stealth · No footprint</div></div>
+      <div class="item"><div class="label">Competitive</div><div class="value">Crowded market</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Oct 2025</span><span class="news-item">TVSF R42 application not recommended (second rejection on same project).</span></li>
+          <li><span class="date">Jan 2025</span><span class="news-item">TVSF R39 application not recommended.</span></li>
+          <li><span class="date">—</span><span class="news-item">No website, news mentions, or LinkedIn presence found. Competitors (Paragon 28 Phantom Fibula Nail; OIC Flex-Fix) launched market-ready alternatives in 2024.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>businesssearch.ohiosos.gov (search "MiniOrtho")</li>
+          <li>utoledo.edu/med/depts/ortho (parent department)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>30 · MiniOrtho</span></div>
+  </section>
+
+  <!-- 31: BG BIOLOGICS -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio · Rejected R42</p>
+    <div class="company-header">
+      <h2>BG Biologics LLC</h2>
+      <p class="tagline">BGSU-licensed agtech. PythiumX — Lake Erie-derived pseudomonad biocontrol formulation for Pythium root-rot pathogens in hydroponic greenhouses. Founder Prof. Paul Morris (BGSU).</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">AgTech · CEA biocontrol</div></div>
+      <div class="item"><div class="label">Round applied</div><div class="value">R42 · Oct 2025</div></div>
+      <div class="item"><div class="label">Status</div><div class="value stealth">Stealth · Single PI</div></div>
+      <div class="item"><div class="label">Gap</div><div class="value">No business co-founder</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Oct 2025</span><span class="news-item">TVSF R42 application not recommended; cited single-person team and missing ESP.</span></li>
+          <li><span class="date">Prior</span><span class="news-item">NSF Phase I STTR — "Biological Control of Pythium Pathogens in Hydroponic Greenhouses" under Paul Morris.</span></li>
+          <li><span class="date">—</span><span class="news-item">No standalone company website or press coverage identified. No disclosed customers, employees beyond founder, or follow-on capital.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>linkedin.com/in/paul-morris-5004a037</li>
+          <li>bgsu.edu/arts-and-sciences/biological-sciences/faculty-and-staff/alphabetical-listing/paul-morris.html</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>31 · BG Biologics</span></div>
+  </section>
+
+  <!-- 32: CARDINEX -->
+  <section class="slide">
+    <p class="eyebrow">Northwest Ohio · Rejected R42</p>
+    <div class="company-header">
+      <h2>Cardinex LLC</h2>
+      <p class="tagline">UToledo-licensed cardiac surgical device. One-Step Aortic Punch designed to simplify proximal anastomosis in coronary artery bypass graft (CABG) surgery. TRL-2; no public footprint.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Cardiac surgical device</div></div>
+      <div class="item"><div class="label">Round applied</div><div class="value">R42 · Oct 2025</div></div>
+      <div class="item"><div class="label">Status</div><div class="value stealth">Stealth · TRL-2</div></div>
+      <div class="item"><div class="label">Competitive</div><div class="value">Medtronic incumbent</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Oct 2025</span><span class="news-item">TVSF R42 evaluators flagged Red on management (founder absent from interview, BS-graduate tech lead, small CABG addressable market). $200K request not recommended.</span></li>
+          <li><span class="date">—</span><span class="news-item">No press, website, or LinkedIn footprint identified.</span></li>
+          <li><span class="date">—</span><span class="news-item">Faces entrenched incumbents (e.g., Medtronic aortic punch).</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>businesssearch.ohiosos.gov (search "Cardinex")</li>
+          <li>health.utoledo.edu/clinics/cardiothoracicsurgery</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer"><span>32 · Cardinex</span></div>
+  </section>
+
+  <!-- 33: SECTION — NWO COMPARABLES -->
+  <section class="slide section-divider">
+    <p class="section-label">Part 4 · Comparables for NWO strategy</p>
+    <h1>Templates worth studying</h1>
+    <p class="section-desc">14 Ohio TVSF entities that exemplify channels, sectors, or institutional models NW Ohio could replicate. Federal-lab IP, ag biotech, advanced materials, water tech, and ESP/incubator models. Each slide includes a specific lesson for NW Ohio.</p>
+    <p class="section-count">Slides 33 → 47</p>
+    <div class="footer"><span>33 · Comparables for NWO</span></div>
+  </section>
+
+  <!-- 34: RAIDER TECHNOLOGIES -->
+  <section class="slide">
+    <p class="eyebrow">Federal-lab channel · Defense radar</p>
+    <div class="company-header">
+      <h2>Raider Technologies</h2>
+      <p class="tagline">AFRL spinout via Wright State (Entrepreneurial Opportunities Program). Frequency-diverse-array radar plus joint radar-communications systems for cUAS, base protection, and Advanced Air Mobility — at ~10× lower peak power.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Defense · Counter-UAS</div></div>
+      <div class="item"><div class="label">Rounds</div><div class="value">R33 · R37</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Traction</div><div class="value">USAF contracts</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">2025</span><span class="news-item">Awarded contract FA233025CB002 (Air Force) per HigherGov.</span></li>
+          <li><span class="date">Jul 2024</span><span class="news-item">$200K TVSF R37 to commercialize hybrid radar-communications system.</span></li>
+          <li><span class="date">2024</span><span class="news-item">Founded as AFRL spinout via Entrepreneurial Opportunities Program (EOP); HQ Oakwood/Dayton.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>raidertechnologies.com</li>
+          <li>ecinnovates.com/raider-technologies</li>
+          <li>highergov.com/awardee/raider-technologies-llc-341386311</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>UToledo and BGSU should formalize a NASA Glenn / NSWC Crane / AFRL pipeline analogous to AFRL's EOP — a structured route for federal-lab researchers to spin technology into Ohio-domiciled companies with TVSF ready to catch them on landing.</p>
+    </div>
+    <div class="footer"><span>34 · Raider Technologies</span></div>
+  </section>
+
+  <!-- 35: DAYTON PHOTONICS -->
+  <section class="slide">
+    <p class="eyebrow">Federal-lab channel · Photonics</p>
+    <div class="company-header">
+      <h2>Dayton Photonics Systems</h2>
+      <p class="tagline">AFRL SBIR-derived. THEIA — 10 Gbps free-space optical (laser) communication unit delivering fiber-grade speed/security without trenching cable. First commercial deployment crosses Auglaize River with MetaLINK.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Photonics · Wireless infra</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R38 · Oct 2024 · $200K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Customer</div><div class="value">MetaLINK Technologies</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Jun 2025</span><span class="news-item">Live deployment with MetaLINK Technologies: 10 Gbps laser link spanning ~3/4 mile across Auglaize River, integrated into MetaLINK's commercial network.</span></li>
+          <li><span class="date">Feb 2025</span><span class="news-item">DoD/Army Notice of Intent to grant exclusive patent license in free-space optical / laser comm fields.</span></li>
+          <li><span class="date">Oct 2024</span><span class="news-item">$200K TVSF R38 (cited as "B-Link" point-to-point optical, 1–5 mile range).</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>dayton-photonics.com</li>
+          <li>ecinnovates.com/fiberless-optics-change-the-game-across-the-auglaize-river</li>
+          <li>regulations.justia.com/regulations/fedreg/2025/02/20/2025-02843.html</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>Pair a NW Ohio wireless ISP (e.g., MetaLINK already operates in NW Ohio) with a federal-lab photonics startup. Real commercial revenue comes when an Ohio-based service provider becomes the first deployment site — not when the startup chases coastal customers.</p>
+    </div>
+    <div class="footer"><span>35 · Dayton Photonics Systems</span></div>
+  </section>
+
+  <!-- 36: HYPHEN INNOVATIONS -->
+  <section class="slide">
+    <p class="eyebrow">Federal-lab channel · Aerospace</p>
+    <div class="company-header">
+      <h2>Hyphen Innovations</h2>
+      <p class="tagline">AFRL/Beavercreek spinout via EOP. i-DAMP suppresses turbine-blade vibration up to 95% using only 1–4% unfused powder. HETE Hybrid Electric Turbine Engine for eVTOL/AAM. Founder Onome Scott-Emuakpor — 23-yr AFRL veteran.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Aerospace · Additive mfg</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R44 · Apr 2026</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Traction</div><div class="value">~$1M USAF/DoD in 16 mo</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Apr 2026</span><span class="news-item">TVSF Round 44 Phase 2 award (HETE hybrid electric turbine for eVTOL/AAM).</span></li>
+          <li><span class="date">2025</span><span class="news-item">Demonstrated up to 95% vibration stress reduction in turbine engine parts via i-DAMP; exhibited at RAPID + TCT 2025.</span></li>
+          <li><span class="date">2022–2024</span><span class="news-item">Founded via AFRL Entrepreneurial Opportunities Program by Scott-Emuakpor. Booked ~$1M Air Force/DoD contracts in 16 months.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>hyphenmade.com</li>
+          <li>jobsohio.com/newsroom/ohio-success/hyphen-innovations-keeping-pace-in-the-aerospace-race</li>
+          <li>tctmagazine.com/additive-manufacturing-3d-printing-industry-insights/hyphen-innovations-vibration-stress-reductions-turbine-parts-idamp</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>Federal-lab veteran founders are the highest-yield spinout source. UToledo / BGSU / NASA Glenn should fund 1–2 dedicated "industry-experienced PI" entrepreneur-in-residence slots like AFRL's EOP rather than relying solely on faculty PIs.</p>
+    </div>
+    <div class="footer"><span>36 · Hyphen Innovations</span></div>
+  </section>
+
+  <!-- 37: VITRUVIAN -->
+  <section class="slide">
+    <p class="eyebrow">Federal-lab channel · Construction tech</p>
+    <div class="company-header">
+      <h2>Vitruvian, LLC</h2>
+      <p class="tagline">US Army ERDC license (Athens-area). Robotic concrete 3D printer fits through standard doorways and prints ~1,000–1,300 sq ft of wall in 24 hours. Commercializing ERDC's Modular Assembly Shelter (MASh) and HALO additive-construction concept.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Construction · 3D printing</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R44 · Apr 2026</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">First customer</div><div class="value">Athens County housing</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Apr 2026</span><span class="news-item">TVSF Round 44 Phase 2 award (HALO/MASh modular outdoor shelter system, ERDC license).</span></li>
+          <li><span class="date">2025</span><span class="news-item">Three 3D-printed homes under construction in Chauncey, OH with Survivor Advocacy Outreach Program (Appalachian Community Grant) and Habitat for Humanity.</span></li>
+          <li><span class="date">2025</span><span class="news-item">Partnership with French firm Constructions-3D and Athens-area workforce training program. Manufacturing facility at 180 Mill St.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>vitruvian3dprinting.com</li>
+          <li>athensindependent.com/vitruvian-3d-printed-homes-chauncey</li>
+          <li>erdcinnovation.org/technology/modular-assembly-shelter-mash-kit</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>Rural Ohio counties can become anchor demo sites for federal-lab construction tech if local workforce-training and affordable-housing dollars are stitched in upfront. NW Ohio small towns (Defiance, Findlay outskirts, Bowling Green periphery) can play the same role Chauncey plays for Vitruvian.</p>
+    </div>
+    <div class="footer"><span>37 · Vitruvian</span></div>
+  </section>
+
+  <!-- 38: SCIOTO AGRITECH -->
+  <section class="slide">
+    <p class="eyebrow">Ag biotech · NW Ohio relevance</p>
+    <div class="company-header">
+      <h2>Scioto AgriTech</h2>
+      <p class="tagline">OSU spinout. Cell-penetrating peptide / membrane-translocation-domain (MTD) technology delivers biostimulants, biopesticides, and defense activators directly into plant cells, replacing chemical inputs. First product targets bacterial spot in tomato.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Ag biotech · Crop biologics</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R37 · Jul 2024 · $200K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">First market</div><div class="value">Tomato bacterial spot</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Feb 2026</span><span class="news-item">Columbus CEO feature on biologics-replace-chemicals strategy.</span></li>
+          <li><span class="date">2026</span><span class="news-item">bioRxiv preprint validating engineered MTD as plug-and-play foliar protein/peptide delivery vehicle.</span></li>
+          <li><span class="date">Aug 2024</span><span class="news-item">Company incorporated; $200K TVSF R37 to commercialize protein-delivery system. Exclusive OSU license.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>sciotoag.com</li>
+          <li>columbusceo.com/story/business/briefs/2026/02/16/scioto-agritech-taps-biologics-to-replace-chemicals-boost-crop-health</li>
+          <li>biorxiv.org/content/10.64898/2026.02.13.705776v1</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>NW Ohio's row-crop economy needs an "OSU plant-science-to-startup" channel of its own. BGSU and OARDC's Wooster station should fund a similar plant-biologics translation track, with first-product field trials sited on NW Ohio corn/soybean acres.</p>
+    </div>
+    <div class="footer"><span>38 · Scioto AgriTech</span></div>
+  </section>
+
+  <!-- 39: ASAKE BIOTECHNOLOGY -->
+  <section class="slide">
+    <p class="eyebrow">Ag/biotech · Translational microbiome</p>
+    <div class="company-header">
+      <h2>ASAKE Biotechnology</h2>
+      <p class="tagline">Ohio U Institute for Molecular Medicine spinout. Engineered probiotic strains delivering microbial peptides (GLP-1-like) for metabolic, gut, and diabetes therapeutics. "Living medicines" platform.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Engineered probiotic</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R42 · Oct 2025</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Funding</div><div class="value">$2M NIH Phase II</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Nov 2025</span><span class="news-item">Science Advances paper: engineered probiotic locally elevating GLP-1 normalized gut parameters and alleviated colitis in mice.</span></li>
+          <li><span class="date">Oct 2025</span><span class="news-item">TVSF Round 42 Phase 2 award (engineered probiotic GLP-1 platform).</span></li>
+          <li><span class="date">2024–2025</span><span class="news-item">$2M NIH Phase II grant for Dual Action Molecule for Type 1 Diabetes. Three OU faculty co-founders.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>asakebiotech.com</li>
+          <li>ohio.edu/research/innovation/our-clients/asake-technologies-llc</li>
+          <li>science.org/doi/10.1126/sciadv.adx6869</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>A regional research university doesn't need a med school to spawn biotech — Ohio U did it via the (former) Edison Biotechnology Institute. UToledo's medical college should mirror this with a dedicated translational-microbiome / GLP-1 track tied to TVSF.</p>
+    </div>
+    <div class="footer"><span>39 · ASAKE Biotechnology</span></div>
+  </section>
+
+  <!-- 40: AIMM -->
+  <section class="slide">
+    <p class="eyebrow">Adv. materials · Water remediation</p>
+    <div class="company-header">
+      <h2>AIMM (Advanced &amp; Innovative Multifunctional Materials)</h2>
+      <p class="tagline">UDRI / OSU. Hierarchically porous carbons (HPCs) — vascular-network pore structure removes PFAS and dyes 20×+ faster than activated charcoal. Drop-in replacement for standard carbon filters. Activate Fellowship cohort.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Advanced materials · Water</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R37 · Jul 2024 · $200K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Scale-up</div><div class="value">5 g → 100 g/day pilot</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">2025</span><span class="news-item">NIEHS SRP Phase I (R43ES036479) for PFAS adsorbent commercialization.</span></li>
+          <li><span class="date">Jul 2024</span><span class="news-item">$200K TVSF R37 to scale HPC production from lab (~5 g/day) to 100 g/day pilot scale.</span></li>
+          <li><span class="date">2024</span><span class="news-item">Activate Fellowship cohort; led by Dr. Luis Estevez (UDRI).</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>aimmlabs.com</li>
+          <li>activate.org/aimm</li>
+          <li>tools.niehs.nih.gov/srp/programs/Program_detail.cfm?Project_ID=R43ES036479</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>Lake-Erie-driven PFAS / harmful contaminant problems are ideal first-customer markets. Toledo's Collins Park Water Treatment Plant should serve as a paid pilot site for a NW Ohio porous-carbon / sorbent startup, the way AIMM uses Dayton's water utility relationships.</p>
+    </div>
+    <div class="footer"><span>40 · AIMM</span></div>
+  </section>
+
+  <!-- 41: GALVANIX -->
+  <section class="slide">
+    <p class="eyebrow">Adv. materials · Critical minerals</p>
+    <div class="company-header">
+      <h2>Galvanix Inc</h2>
+      <p class="tagline">CWRU + Ames Lab + LLNL tri-lab option. Molten-salt electrowinning of neodymium and dysprosium metal — energy-efficient, CO₂-free domestic rare-earth metal production for NdFeB magnets.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Critical materials · Rare earths</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R38 · Oct 2024 · $200K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">HQ</div><div class="value">Moreland Hills, OH</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Dec 2025</span><span class="news-item">LLNL/CWRU/Ames publish Nd-magnet fabrication process producing high-purity material at high efficiency; magnets comparable to industry standard.</span></li>
+          <li><span class="date">Oct 2024</span><span class="news-item">$200K TVSF R38 for critical-metals production technology.</span></li>
+          <li><span class="date">2024</span><span class="news-item">Formation of Galvanix Inc. with option agreement on CWRU IP; positioned for DOE $134M rare-earth recovery program.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>ameslab.gov/cmi/research-highlights/new-small-business-galvanix-inc</li>
+          <li>llnl.gov/article/53696/energy-efficient-process-delivers-rare-earth-element-magnets</li>
+          <li>ecinnovates.com/entrepreneurs-center-tech-start-ups-secure-1-4m-in-grant-funding</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>NW Ohio's auto/EV-magnet supply chain (Honda, Stellantis Toledo, Ford EV battery) means a Galvanix-equivalent rare-earth processor sited locally could anchor Ohio's NdFeB downstream. The deal structure is tri-lab IP option (CWRU+Ames+LLNL), not single-university licensing.</p>
+    </div>
+    <div class="footer"><span>41 · Galvanix</span></div>
+  </section>
+
+  <!-- 42: NECOTECH -->
+  <section class="slide">
+    <p class="eyebrow">Adv. materials · Sustainable infrastructure</p>
+    <div class="company-header">
+      <h2>necoTECH</h2>
+      <p class="tagline">ERDC license + Ohio Wesleyan / Delaware Entrepreneurial Center. necoPave polymer-modified asphalt using recycled mixed-plastic and carpet fiber. HOTPOD rapid-runway-repair (Hot Patch On Demand) for AFWERX customers.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Sustainable infra · Asphalt</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R42 · Oct 2025 · $200K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Traction</div><div class="value">$500K AFWERX + 6 contracts</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Oct 2025</span><span class="news-item">$200K TVSF R42 for "Activated Cold Patch Asphalt for Superior Pavement Repair" (ERDC license).</span></li>
+          <li><span class="date">2024</span><span class="news-item">Cemex Ventures Top 50 Startups list; Wefunder community round.</span></li>
+          <li><span class="date">2020–2024</span><span class="news-item">AFWERX STTR Phase II $500K + 6 total Air Force AFWERX SBIR/STTR contracts in 18 months for HOTPOD runway repair.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>necotech.com</li>
+          <li>necotechusa.com/u-s-air-force-awards-afwerx-sttr-contract-to-necotech</li>
+          <li>delawareentrepreneurialcenteratowu.com/our-members/necotech</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>A small private liberal-arts college (OWU) plus its Delaware Entrepreneurial Center is enough to anchor a defense-licensed materials startup. BGSU and Defiance College should run a similar incubator-on-campus model paired with ODOT and ANG-base-paving as first customers.</p>
+    </div>
+    <div class="footer"><span>42 · necoTECH</span></div>
+  </section>
+
+  <!-- 43: WATERWISE / CADDIS TECH -->
+  <section class="slide">
+    <p class="eyebrow">Water tech · Lake Erie relevance</p>
+    <div class="company-header">
+      <h2>WaterWise Technologies (Caddis Tech)</h2>
+      <p class="tagline">OSU spinout, Hilliard. MANTA — autonomous unmanned surface vehicle ("Roomba for water") using UV-C LED to neutralize cyanobacteria and microcystin without chemicals. Continuous water-quality data telemetry.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Water tech · Autonomous USV</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R40 · Apr 2025</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Founder</div><div class="value">Kendall Byrd · OSU</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">2025</span><span class="news-item">Peer-reviewed Applied Sciences paper: "Using a UV-Enabled Boat to Reduce Microcystin and Suppress Cyanobacterial Growth in HAB-Impacted Surface Waters."</span></li>
+          <li><span class="date">Apr 2025</span><span class="news-item">TVSF R40 Phase 2 award (OSU-licensed UV-C USV).</span></li>
+          <li><span class="date">2024</span><span class="news-item">Founded by Kendall Byrd under Prof. Jiyoung Lee. Rev1 Ventures support; first customers: golf courses, municipal parks, recreational lakes. 5-person team.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>caddistech.com</li>
+          <li>oied.osu.edu/Meet-WaterWise-The-Ohio-State-Startup-Battling-Toxic-Algae-with-Drones</li>
+          <li>mdpi.com/2076-3417/15/12/6765</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>Lake Erie and Maumee Bay HAB problems are the world's most natural first-customer market. A NW-Ohio-headquartered MANTA equivalent (sited in Toledo/Oregon) would hit identical PMF. The recipe: Ohio Sea Grant + a public-health PI + Rev1-equivalent capital — BGSU's NW Ohio Water Quality Lab could replicate.</p>
+    </div>
+    <div class="footer"><span>43 · WaterWise / Caddis Tech</span></div>
+  </section>
+
+  <!-- 44: HYDROSMART -->
+  <section class="slide">
+    <p class="eyebrow">Water tech · Cautionary tale</p>
+    <div class="company-header">
+      <h2>HydroSmart, LLC</h2>
+      <p class="tagline">Hilliard, OH. Smart fluid-monitoring platform — originally pitched as warfighter hydration sensor for military human-performance, also positioned as IoT leak-detection / water-conservation. Limited public news flow since 2023 award.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">Water tech · IoT</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R32 · Apr 2023 · $100K</div></div>
+      <div class="item"><div class="label">Status</div><div class="value quiet">Quiet</div></div>
+      <div class="item"><div class="label">Team size</div><div class="value">~1 (per D&amp;B)</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">2023</span><span class="news-item">Pilot test with an Ohio water utility (per company materials).</span></li>
+          <li><span class="date">Apr 2023</span><span class="news-item">$100K TVSF R32 Phase 2 (warfighter hydration sensor suite, Hilliard).</span></li>
+          <li><span class="date">2015</span><span class="news-item">Founded; Mario Larach listed as CEO. Minimal recent news flow 2024–2026.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>hydrosmarttech.com</li>
+          <li>linkedin.com/company/hydrosmarttechnologies</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>A TVSF Phase 2 award is necessary but not sufficient. Without a clear first-customer commitment (utility or DoD program of record), startups go quiet. NW Ohio ESPs should require letters of intent or paid pilot agreements before TVSF Phase 2 submission.</p>
+    </div>
+    <div class="footer"><span>44 · HydroSmart</span></div>
+  </section>
+
+  <!-- 45: UARF SPARK FUND -->
+  <section class="slide">
+    <p class="eyebrow">ESP model · The single highest-leverage move</p>
+    <div class="company-header">
+      <h2>University of Akron Research Foundation — Spark Fund</h2>
+      <p class="tagline">Repeat Phase 1 grantee (R32, R36, R40, R44). Up to $35,000 per UA technology for prototyping/testing services, generating proof-of-concept needed for licensing to scalable startups.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">ESP · Tech-transfer</div></div>
+      <div class="item"><div class="label">Cycles</div><div class="value">4 Phase 1 awards</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Outcomes</div><div class="value">15 licenses · ~$21M raised · 2 exits</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent Activity</h3>
+        <ul>
+          <li><span class="date">Apr 2026</span><span class="news-item">TVSF Round 44 Phase 1 award (4th cycle as ESP grantee).</span></li>
+          <li><span class="date">Apr 2025</span><span class="news-item">Round 40 Phase 1; tracked metrics: 15 licenses, ~$21M raised by licensees, 2 exits.</span></li>
+          <li><span class="date">2021–2024</span><span class="news-item">16+ UA Phase 1 awards &gt;$1M cumulative; 400+ active issued/pending UA patents managed.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>uakronuarf.com/sparkfund.html</li>
+          <li>uakron.edu/uarf/faculty/spark-fund</li>
+          <li>uakronuarf.com/aboutus.html</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio · Highest-leverage institutional move</div>
+      <p>BGSU and UToledo lack a productized small-grant prototyping mechanism. Establish a "UToledo/BGSU Spark Fund" funded jointly via TVSF Phase 1 ESP and university match — $25K–$35K rapid-deployment grants tied to a license condition. This is the single highest-leverage institutional move NW Ohio can make.</p>
+    </div>
+    <div class="footer"><span>45 · UARF Spark Fund</span></div>
+  </section>
+
+  <!-- 46: CCHMC INNOVATION VENTURES -->
+  <section class="slide">
+    <p class="eyebrow">ESP model · Hospital tech-transfer at scale</p>
+    <div class="company-header">
+      <h2>Cincinnati Children's Innovation Ventures (CCHMC)</h2>
+      <p class="tagline">Translational-medicine commercialization office covering 300+ active life-science innovations. 746 cumulative licenses, 20 startups, $479M raised by portfolio, 250 products to market.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">ESP · Hospital tech-transfer</div></div>
+      <div class="item"><div class="label">Round</div><div class="value">R44 · Apr 2026 · $1M</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Portfolio</div><div class="value">~$293.7M exit value</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Apr 2026</span><span class="news-item">TVSF Round 44 Phase 1 ESP award $1,000,000 (Option 2 institutional grant level — largest single award in 14-round window).</span></li>
+          <li><span class="date">2024–2025</span><span class="news-item">Reported portfolio metrics: 13–20 startups featuring CCHMC tech, ~$293.7M exit value.</span></li>
+          <li><span class="date">Ongoing</span><span class="news-item">TVSF Phase 1 used to advance CCHMC IP toward licensing to Ohio-domiciled startups.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>innovation.cincinnatichildrens.org</li>
+          <li>cincinnatichildrens.org/research/support/innovation-ventures</li>
+          <li>scienceblog.cincinnatichildrens.org/innovation-ventures</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>No NW-Ohio hospital system runs a tech-transfer office at this scale. ProMedica and Mercy Health Toledo could partner (or deputize UToledo Med Center) to build a single shared "NW Ohio Health Innovation Ventures" with one staff and shared TVSF ESP application, mimicking CCHMC's centralized funnel.</p>
+    </div>
+    <div class="footer"><span>46 · CCHMC Innovation Ventures</span></div>
+  </section>
+
+  <!-- 47: NCH RI -->
+  <section class="slide">
+    <p class="eyebrow">ESP model · Multi-party fund</p>
+    <div class="company-header">
+      <h2>Research Institute at Nationwide Children's Hospital</h2>
+      <p class="tagline">Pediatric translational research with a venture vehicle (Rev1 Catalyst Fund III) and CDMO (Andelyn Biosciences). Multi-party fund: NCH + OSU + Rev1 = $30M Catalyst Fund III. Predecessor funds returned &gt;$450M in exits.</p>
+    </div>
+    <div class="company-meta">
+      <div class="item"><div class="label">Sector</div><div class="value">ESP · Pediatric venture</div></div>
+      <div class="item"><div class="label">Cycles</div><div class="value">Multiple Phase 1 + R42</div></div>
+      <div class="item"><div class="label">Status</div><div class="value active">Active</div></div>
+      <div class="item"><div class="label">Catalyst III</div><div class="value">$30M · 12 cos / 5 yrs</div></div>
+    </div>
+    <div class="company-body">
+      <div class="company-news">
+        <h3>Recent News</h3>
+        <ul>
+          <li><span class="date">Oct 2025</span><span class="news-item">Nationwide Foundation $10M Pediatric Innovation Fund supports affordable housing and clinical research.</span></li>
+          <li><span class="date">Sep 2023</span><span class="news-item">Rev1 Catalyst Fund III launched: $30M (NCH $14M + OSU $14M + Rev1 $2M); will fund ~12 companies over 5 years.</span></li>
+          <li><span class="date">Ongoing</span><span class="news-item">Multiple TVSF Phase 1 awards as ESP institution. Andelyn Biosciences (Cytiva/Pall investment) is the CDMO arm.</span></li>
+        </ul>
+      </div>
+      <div class="company-links">
+        <h3>Sources</h3>
+        <ul>
+          <li>rev1ventures.com/blog/rev1-ventures-launches-30mm-fund</li>
+          <li>nationwidechildrens.org/newsroom/news-releases/2025/10/pediatric_innovation_fund</li>
+          <li>hitconsultant.net/2023/09/19/rev1-ventures-launches-30m-fund</li>
+        </ul>
+      </div>
+    </div>
+    <div class="lesson-callout">
+      <div class="lesson-label">Lesson for Northwest Ohio</div>
+      <p>The NCH model = hospital + flagship university + regional VC co-investing into a single co-branded fund. NW Ohio's parallel: UToledo Health + BGSU + a NW Ohio regional fund (e.g., Toledo Region partnership) jointly capitalizing a small ($10–15M) pediatric/healthcare-pipeline fund. The equity-and-IP alignment is what unlocks repeat TVSF wins.</p>
+    </div>
+    <div class="footer"><span>47 · Nationwide Children's RI</span></div>
+  </section>
+
+  <!-- 48: BOTTOM LINE -->
+  <section class="slide">
+    <p class="eyebrow">Bottom line</p>
+    <h2 class="slide-title">A professionally-run, sector-broadening, federal-lab-friendly grant program</h2>
+
+    <div class="big-takeaway">
+      <p>TVSF funds at the <span class="kicker">~$200K-per-startup tier</span> — small grants by VC standards, but meaningful for the proof-of-concept work that de-risks subsequent fundraising.</p>
+      <p>Recent rounds show deliberate scale-up via institutional Phase 1 grants (R38, R44) — ODOD is investing in the upstream pipeline as much as in any single company. The portfolio is healthy on the surface (74% Active, 1 acquisition, ~$30M follow-on), but the cohort is too young to confirm ROI. Revisit Round 31 awardees in 2028+ for a defensible answer.</p>
+    </div>
+
+    <div class="footer"><span>48 · Bottom line</span></div>
+  </section>
+
+  <!-- 49: APPENDIX -->
+  <section class="slide slide-title-page">
+    <div class="accent-bar"></div>
+    <h1 style="font-size: 3.5vw;">Appendix &amp; Sources</h1>
+    <p class="subtitle" style="font-size: 1.2vw; max-width: 75%;">Source PDFs (Rounds 31–44) saved locally in <code style="background: rgba(0,0,0,0.05); padding: 0.2vh 0.5vw; border-radius: 3px; font-size: 0.95vw;">Ohio_TVSF_Reports/</code>.</p>
+    <p class="subtitle" style="font-size: 1.1vw; max-width: 75%; margin-top: 2vh;">Original source: Ohio Department of Development → Third Frontier &amp; Technology → Technology Validation and Start-Up Fund.</p>
+    <p class="subtitle" style="font-size: 1.05vw; max-width: 75%; margin-top: 2vh; color: #888;">Status assessments compiled from public web sources (company sites, LinkedIn, Crunchbase, Ohio Secretary of State business search, news mentions) as of May 2026. Status of any individual company may have changed since compilation.</p>
+    <p class="meta" style="margin-top: 4vh;">Generated May 2026 · 14 source documents · ~78 startups assessed</p>
+  </section>
+
+</div>
+
+<div class="nav-hint">← → arrows · F fullscreen · ESC exit</div>
+
+<script>
+  // Auto-convert source-link text into clickable anchors
+  document.querySelectorAll('.company-links li').forEach(li => {
+    if (li.querySelector('a')) return; // already linkified
+    const text = li.textContent.trim();
+    const firstSpace = text.indexOf(' ');
+    const url = firstSpace === -1 ? text : text.substring(0, firstSpace);
+    const rest = firstSpace === -1 ? '' : text.substring(firstSpace);
+    if (!url.includes('.') || url.length < 4) return;
+    const href = url.startsWith('http') ? url : 'https://' + url;
+    li.innerHTML = `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>${rest}`;
+  });
+
+  const slides = document.querySelectorAll('.slide');
+  const progress = document.getElementById('progress');
+  let current = 0;
+
+  function show(i) {
+    if (i < 0) i = 0;
+    if (i >= slides.length) i = slides.length - 1;
+    slides[current].classList.remove('active');
+    slides[i].classList.add('active');
+    current = i;
+    progress.style.width = (((i + 1) / slides.length) * 100) + '%';
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      show(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      e.preventDefault();
+      show(current - 1);
+    } else if (e.key === 'Home') {
+      show(0);
+    } else if (e.key === 'End') {
+      show(slides.length - 1);
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  // Click navigation: right half = next, left half = prev
+  document.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') return;
+    const w = window.innerWidth;
+    if (e.clientX > w / 2) show(current + 1);
+    else show(current - 1);
+  });
+
+  show(0);
+</script>
+</body>
+</html>
