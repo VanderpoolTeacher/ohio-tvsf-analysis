@@ -105,6 +105,19 @@
     justify-content: center;
     background: linear-gradient(135deg, #fafaf7 0%, #f0ece4 100%);
   }
+  .version-stamp {
+    position: absolute;
+    top: 4vh;
+    right: 5vw;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.8vw;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    background: rgba(0,0,0,0.04);
+    padding: 0.5vh 0.9vw;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
   .slide-title-page h1 {
     font-size: 5.8vw;
     line-height: 1.05;
@@ -620,6 +633,14 @@
     .footer { font-size: clamp(10px, 2.9vw, 12px); left: 5vw; right: 5vw; bottom: 2vh; }
     .nav-hint { display: none; }
 
+    /* VERSION STAMP — readable on mobile */
+    .version-stamp {
+      font-size: clamp(10px, 2.8vw, 12px);
+      top: 2.5vh;
+      right: 4vw;
+      padding: 0.6vh 2vw;
+    }
+
     /* GEOGRAPHY MAP — disable framing border on mobile */
     .two-col > .col[style*="border"] {
       border: none !important;
@@ -636,6 +657,7 @@
 
   <!-- 1: TITLE -->
   <section class="slide active slide-title-page">
+    <span class="version-stamp">v 0.0.0</span>
     <div class="accent-bar"></div>
     <h1>Ohio TVSF<br>Rounds 31–44</h1>
     <p class="subtitle">An analysis of 14 evaluator reports from the Technology Validation and Start-Up Fund — Jan 2023 through Apr 2026.</p>
