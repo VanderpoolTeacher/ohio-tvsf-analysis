@@ -589,11 +589,22 @@
      clamp(MIN_PX, FLEX_VW, MAX_PX) prevents text from shrinking below readable size
      ======================================== */
   @media (max-width: 768px) {
+    /* On mobile, let the BODY scroll naturally instead of trying to scroll each slide.
+       Slides become static blocks of variable height, body grows/scrolls. This is the
+       most reliable scroll behavior on mobile (especially iOS Safari). */
+    html, body { height: auto !important; overflow: auto !important; }
+    .deck { height: auto; min-height: 100vh; position: static; }
     .slide {
-      padding: 4vw 5vw 9vh;
-      overflow-y: auto;
-      overflow-x: hidden;
+      position: static !important;
+      inset: auto !important;
+      width: 100%;
+      min-height: 100vh;
+      height: auto;
+      overflow: visible;
+      padding: 4vw 5vw 4vh;
     }
+    .slide:not(.active) { display: none; }
+    .progress { position: fixed; }
 
     /* TITLE & SECTION DIVIDERS */
     .slide-title-page h1, h1.deck-title { font-size: clamp(36px, 10vw, 60px) !important; line-height: 1.05; }
@@ -793,7 +804,7 @@
 
   <!-- 1: TITLE -->
   <section class="slide active slide-title-page">
-    <span class="version-stamp">v 0.2.2</span>
+    <span class="version-stamp">v 0.3.0</span>
     <div class="accent-bar"></div>
     <h1>Ohio TVSF<br>Rounds 31–44</h1>
     <p class="subtitle">An analysis of 14 evaluator reports from the Technology Validation and Start-Up Fund — Jan 2023 through Apr 2026.</p>
@@ -2845,6 +2856,10 @@
     slides[i].classList.add('active');
     current = i;
     progress.style.width = (((i + 1) / slides.length) * 100) + '%';
+    // On mobile (where body scrolls), reset to top of new slide
+    if (window.innerWidth <= 768) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
   }
 
   document.addEventListener('keydown', (e) => {
