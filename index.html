@@ -569,6 +569,51 @@
     text-align: center;
   }
 
+  /* MOBILE-ONLY geography bars (slide 11) */
+  .mobile-geography {
+    display: none;
+    flex-direction: column;
+    gap: 2vh;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+  }
+  .mgeo-row { display: flex; flex-direction: column; gap: 0.4vh; }
+  .mgeo-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .mgeo-name {
+    font-weight: 700;
+    font-size: clamp(14px, 4vw, 17px);
+    color: var(--fg);
+  }
+  .mgeo-count {
+    font-weight: 700;
+    font-size: clamp(15px, 4.4vw, 20px);
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+  .mgeo-track {
+    height: 14px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .mgeo-fill { height: 100%; border-radius: 4px; }
+  .mgeo-meta {
+    font-size: clamp(11px, 3.2vw, 13px);
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .mgeo-caption {
+    margin-top: 0.5vh;
+    font-size: clamp(10px, 2.8vw, 12px);
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
   /* MOBILE-ONLY portfolio composition bars (slide 6) */
   .mobile-portfolio {
     display: none;
@@ -735,6 +780,12 @@
     .mobile-portfolio { display: flex !important; }
     .mobile-mini-chart { display: flex !important; }
 
+    /* GEOGRAPHY — hide SVG bubble map on mobile, show horizontal-bar version */
+    .geo-svg-col { display: none !important; }
+    .mobile-geography { display: flex !important; }
+    /* The two-col on geography slide now only has the right (detail) column on mobile */
+    .two-col:has(.geo-svg-col) { grid-template-columns: 1fr !important; }
+
     /* STATUS MIX DONUT — explicit sizing on mobile so SVG can't push slide height beyond viewport (slide 7) */
     .two-col svg[viewBox^="0 0 320"] {
       width: 55vw !important;
@@ -804,7 +855,7 @@
 
   <!-- 1: TITLE -->
   <section class="slide active slide-title-page">
-    <span class="version-stamp">v 0.3.0</span>
+    <span class="version-stamp">v 0.3.1</span>
     <div class="accent-bar"></div>
     <h1>Ohio TVSF<br>Rounds 31–44</h1>
     <p class="subtitle">An analysis of 14 evaluator reports from the Technology Validation and Start-Up Fund — Jan 2023 through Apr 2026.</p>
@@ -1398,8 +1449,43 @@
     <h2 class="slide-title">Three hubs absorb most of the awards — SE and NW Ohio underrepresented</h2>
     <p class="lede">Cleveland-area and Columbus startups together account for ~60% of Phase 2 awardees. Cincinnati and Dayton form the next tier; Athens and Toledo are minimal despite institutional pipelines.</p>
 
+    <!-- Mobile-only horizontal bar visualization (replaces the SVG bubbles on small screens) -->
+    <div class="mobile-geography">
+      <div class="mgeo-row" data-tier="1">
+        <div class="mgeo-head"><span class="mgeo-name">Cleveland metro</span><span class="mgeo-count">22</span></div>
+        <div class="mgeo-track"><div class="mgeo-fill" style="width: 100%; background: #A91D3A;"></div></div>
+        <div class="mgeo-meta">+ Akron · Youngstown · 5 Phase 1 institutions</div>
+      </div>
+      <div class="mgeo-row" data-tier="1">
+        <div class="mgeo-head"><span class="mgeo-name">Columbus</span><span class="mgeo-count">22</span></div>
+        <div class="mgeo-track"><div class="mgeo-fill" style="width: 100%; background: #A91D3A;"></div></div>
+        <div class="mgeo-meta">2 Phase 1 institutions (OSU · NCH)</div>
+      </div>
+      <div class="mgeo-row" data-tier="2">
+        <div class="mgeo-head"><span class="mgeo-name">Cincinnati</span><span class="mgeo-count">13</span></div>
+        <div class="mgeo-track"><div class="mgeo-fill" style="width: 59%; background: #1B4965;"></div></div>
+        <div class="mgeo-meta">3 Phase 1 institutions (UC · CCHMC · Bon Secours)</div>
+      </div>
+      <div class="mgeo-row" data-tier="2">
+        <div class="mgeo-head"><span class="mgeo-name">Dayton / Miami Valley</span><span class="mgeo-count">11</span></div>
+        <div class="mgeo-track"><div class="mgeo-fill" style="width: 50%; background: #1B4965;"></div></div>
+        <div class="mgeo-meta">1 Phase 1 (Parallax) · federal-lab IP hub</div>
+      </div>
+      <div class="mgeo-row" data-tier="3">
+        <div class="mgeo-head"><span class="mgeo-name">Athens / SE Ohio</span><span class="mgeo-count">3</span></div>
+        <div class="mgeo-track"><div class="mgeo-fill" style="width: 14%; background: #2D6A4F;"></div></div>
+        <div class="mgeo-meta">No Phase 1 institutions · Ohio U pipeline</div>
+      </div>
+      <div class="mgeo-row" data-tier="3">
+        <div class="mgeo-head"><span class="mgeo-name">Toledo / NW Ohio</span><span class="mgeo-count">1–2</span></div>
+        <div class="mgeo-track"><div class="mgeo-fill" style="width: 9%; background: #2D6A4F;"></div></div>
+        <div class="mgeo-meta">1 Phase 1 (BGSU R44) · UToledo origins</div>
+      </div>
+      <p class="mgeo-caption">Bars proportional to # of Phase 2 awardees · tier 1 dominates ~60%</p>
+    </div>
+
     <div class="two-col">
-      <div class="col" style="border: 1px solid var(--line); border-radius: 8px; padding: 2.5vh 1.8vw; background: rgba(0,0,0,0.012);">
+      <div class="col geo-svg-col" style="border: 1px solid var(--line); border-radius: 8px; padding: 2.5vh 1.8vw; background: rgba(0,0,0,0.012);">
         <svg viewBox="0 0 580 480" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto;">
 
           <!-- Cleveland metro / NE Ohio - 22 -->
