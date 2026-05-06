@@ -46,6 +46,13 @@
   .slide::-webkit-scrollbar-track { background: transparent; }
 
   .slide.active { display: flex; }
+  /* Prevent flex from shrinking children to fit — without this, content squeezes
+     into viewport height instead of overflowing, blocking scroll. */
+  .slide > * { flex-shrink: 0; }
+  /* The chart element is the only one that should grow/shrink to fill space */
+  .slide > .chart { flex: 1; min-height: 0; flex-shrink: 1; }
+  /* Footer pushed to bottom of remaining space when content is short */
+  .slide > .footer { margin-top: auto; }
 
   h1.deck-title {
     font-size: 4.4vw;
@@ -717,16 +724,24 @@
     .mobile-portfolio { display: flex !important; }
     .mobile-mini-chart { display: flex !important; }
 
-    /* STATUS MIX DONUT — constrain donut size on mobile so legend fits without cropping (slide 7) */
+    /* STATUS MIX DONUT — explicit sizing on mobile so SVG can't push slide height beyond viewport (slide 7) */
     .two-col svg[viewBox^="0 0 320"] {
-      max-width: 60vw;
-      max-height: 60vw;
+      width: 55vw !important;
+      height: 55vw !important;
+      max-width: 55vw;
+      max-height: 55vw;
       display: block;
       margin: 0 auto;
+      flex-shrink: 0;
     }
     /* Slide 7 had inline align-items:center; force start so donut + legend stack from the top and the slide scrolls cleanly */
     .two-col[style*="align-items: center"] {
       align-items: start !important;
+    }
+    /* Force vertical scroll on every slide + iOS momentum (some phones / browsers get stuck without this) */
+    .slide {
+      overflow-y: auto !important;
+      -webkit-overflow-scrolling: touch;
     }
 
     /* GEOGRAPHY MAP — bubble city labels need bigger user-unit font on mobile */
@@ -778,7 +793,7 @@
 
   <!-- 1: TITLE -->
   <section class="slide active slide-title-page">
-    <span class="version-stamp">v 0.2.1</span>
+    <span class="version-stamp">v 0.2.2</span>
     <div class="accent-bar"></div>
     <h1>Ohio TVSF<br>Rounds 31–44</h1>
     <p class="subtitle">An analysis of 14 evaluator reports from the Technology Validation and Start-Up Fund — Jan 2023 through Apr 2026.</p>
