@@ -508,29 +508,30 @@
 
   /* ========================================
      MOBILE RESPONSIVE — phones & narrow tablets
+     clamp(MIN_PX, FLEX_VW, MAX_PX) prevents text from shrinking below readable size
      ======================================== */
   @media (max-width: 768px) {
     .slide {
-      padding: 4vw 5vw 8vh;
+      padding: 4vw 5vw 9vh;
       overflow-y: auto;
       overflow-x: hidden;
     }
 
     /* TITLE & SECTION DIVIDERS */
-    .slide-title-page h1, h1.deck-title { font-size: 10vw !important; line-height: 1.05; }
-    .slide-title-page .subtitle { font-size: 4.2vw !important; max-width: 100%; }
-    .slide-title-page .meta { font-size: 3vw !important; }
+    .slide-title-page h1, h1.deck-title { font-size: clamp(36px, 10vw, 60px) !important; line-height: 1.05; }
+    .slide-title-page .subtitle { font-size: clamp(15px, 4.4vw, 22px) !important; max-width: 100%; }
+    .slide-title-page .meta { font-size: clamp(11px, 3.2vw, 14px) !important; }
     .slide-title-page .accent-bar { width: 60px; height: 4px; margin-bottom: 2vh; }
-    .section-divider h1 { font-size: 10vw !important; line-height: 1.05; }
-    .section-divider .section-desc { font-size: 4.2vw !important; max-width: 100%; }
-    .section-divider .section-label { font-size: 3vw !important; letter-spacing: 0.16em; }
-    .section-divider .section-count { font-size: 3vw !important; margin-top: 3vh; }
+    .section-divider h1 { font-size: clamp(36px, 10vw, 60px) !important; line-height: 1.05; }
+    .section-divider .section-desc { font-size: clamp(15px, 4.4vw, 22px) !important; max-width: 100%; }
+    .section-divider .section-label { font-size: clamp(11px, 3.2vw, 14px) !important; letter-spacing: 0.16em; }
+    .section-divider .section-count { font-size: clamp(11px, 3.2vw, 14px) !important; margin-top: 3vh; }
 
     /* SLIDE HEADERS */
-    h2.slide-title { font-size: 6vw; line-height: 1.2; }
-    .eyebrow { font-size: 3vw; letter-spacing: 0.14em; }
-    .lede { font-size: 4vw; max-width: 100%; line-height: 1.45; margin-bottom: 2vh; }
-    p, li { font-size: 3.6vw; }
+    h2.slide-title { font-size: clamp(20px, 6.2vw, 30px); line-height: 1.2; }
+    .eyebrow { font-size: clamp(11px, 3.2vw, 14px); letter-spacing: 0.14em; }
+    .lede { font-size: clamp(14px, 4.2vw, 19px); max-width: 100%; line-height: 1.45; margin-bottom: 2vh; }
+    p, li { font-size: clamp(13px, 3.8vw, 17px); }
 
     /* COL/GRID — STACK */
     .two-col, .three-col {
@@ -546,8 +547,8 @@
       row-gap: 2.5vh;
     }
     .stat { padding-left: 3vw; }
-    .stat .num { font-size: 7vw !important; }
-    .stat .label { font-size: 2.7vw; }
+    .stat .num { font-size: clamp(24px, 7.5vw, 36px) !important; }
+    .stat .label { font-size: clamp(10px, 3vw, 12px); }
 
     /* CARDS — STACK 1-col */
     .cards {
@@ -556,14 +557,14 @@
       grid-auto-rows: auto !important;
     }
     .card { padding: 2vh 4vw; }
-    .card h4 { font-size: 4.4vw; }
-    .card .sub { font-size: 2.7vw; }
-    .card p { font-size: 3.4vw; line-height: 1.5; }
+    .card h4 { font-size: clamp(15px, 4.5vw, 20px); }
+    .card .sub { font-size: clamp(10px, 3vw, 13px); }
+    .card p { font-size: clamp(13px, 3.7vw, 16px); line-height: 1.5; }
 
     /* COMPANY HEADER */
     .company-header { padding-bottom: 1.5vh; margin-bottom: 2.5vh; }
-    .company-header h2 { font-size: 7.2vw; line-height: 1.1; }
-    .company-header .tagline { font-size: 3.7vw; max-width: 100%; line-height: 1.45; }
+    .company-header h2 { font-size: clamp(24px, 7.5vw, 36px); line-height: 1.1; }
+    .company-header .tagline { font-size: clamp(13px, 4vw, 17px); max-width: 100%; line-height: 1.45; }
 
     /* COMPANY META — 4 → 2x2 */
     .company-meta {
@@ -572,54 +573,51 @@
       row-gap: 2.5vh;
     }
     .company-meta .item { padding-left: 2.5vw; }
-    .company-meta .item .label { font-size: 2.5vw; }
-    .company-meta .item .value { font-size: 3.6vw; }
+    .company-meta .item .label { font-size: clamp(10px, 3vw, 12px); }
+    .company-meta .item .value { font-size: clamp(13px, 3.8vw, 16px); }
 
     /* COMPANY BODY — STACK */
     .company-body {
       grid-template-columns: 1fr !important;
       gap: 3vh;
     }
-    .company-news h3, .company-links h3 { font-size: 2.8vw; }
+    .company-news h3, .company-links h3 { font-size: clamp(11px, 3.2vw, 13px); }
     .company-news li {
-      font-size: 3.3vw;
+      font-size: clamp(13px, 3.7vw, 16px);
       flex-direction: column;
       gap: 0.4vh;
     }
     .company-news li .date {
       width: auto;
-      font-size: 2.8vw;
+      font-size: clamp(11px, 3.2vw, 14px);
     }
-    .company-links li, .company-links a { font-size: 3vw; }
+    .company-links li, .company-links a { font-size: clamp(11px, 3.4vw, 14px); }
 
     /* LESSON CALLOUT */
     .lesson-callout { padding: 1.5vh 4vw; margin-top: 2vh; }
-    .lesson-callout .lesson-label { font-size: 2.4vw; }
-    .lesson-callout p { font-size: 3.3vw; line-height: 1.45; }
+    .lesson-callout .lesson-label { font-size: clamp(10px, 3vw, 12px); }
+    .lesson-callout p { font-size: clamp(13px, 3.7vw, 16px); line-height: 1.45; }
 
-    /* DATA TABLES — shrink + horizontal scroll */
-    .data-table { font-size: 3vw; }
-    .data-table th { font-size: 2.4vw; padding: 1vh 2vw; }
+    /* DATA TABLES */
+    .data-table { font-size: clamp(12px, 3.3vw, 14px); }
+    .data-table th { font-size: clamp(10px, 2.9vw, 12px); padding: 1vh 2vw; }
     .data-table td { padding: 1vh 2vw; }
 
     /* COMPACT LIST / MARKERED LIST */
-    ul.compact li { font-size: 3.4vw; }
-    ul.markered li { font-size: 3.3vw; padding-left: 5vw; padding-right: 0; }
+    ul.compact li { font-size: clamp(13px, 3.7vw, 16px); }
+    ul.markered li { font-size: clamp(13px, 3.6vw, 16px); padding-left: 5vw; padding-right: 0; }
 
     /* COL CONTENT */
-    .col h3 { font-size: 3.6vw; }
-    .col ul li { font-size: 3.3vw; }
-    .col p { font-size: 3.4vw; }
+    .col h3 { font-size: clamp(13px, 4vw, 16px); }
+    .col ul li { font-size: clamp(13px, 3.6vw, 16px); }
+    .col p { font-size: clamp(13px, 3.7vw, 16px); }
 
     /* BIG TAKEAWAY */
-    .big-takeaway p { font-size: 5.5vw !important; max-width: 100%; }
-    .big-takeaway p:last-child { font-size: 3.5vw !important; }
-
-    /* KICKER */
-    .kicker { font-size: inherit; }
+    .big-takeaway p { font-size: clamp(20px, 6vw, 28px) !important; max-width: 100%; }
+    .big-takeaway p:last-child { font-size: clamp(13px, 3.8vw, 16px) !important; }
 
     /* FOOTER & NAV HINT */
-    .footer { font-size: 2.3vw; left: 5vw; right: 5vw; bottom: 2vh; }
+    .footer { font-size: clamp(10px, 2.9vw, 12px); left: 5vw; right: 5vw; bottom: 2vh; }
     .nav-hint { display: none; }
 
     /* GEOGRAPHY MAP — disable framing border on mobile */
