@@ -519,6 +519,51 @@
   }
   ul.compact li strong { color: var(--accent); font-weight: 600; }
 
+  /* MOBILE-ONLY mini bar charts (used by funding cadence + approval rate + portfolio) */
+  .mobile-mini-chart {
+    display: none;
+    flex-direction: column;
+    gap: 0.7vh;
+    margin-top: 1.5vh;
+  }
+  .mmc-row {
+    display: grid;
+    grid-template-columns: 9vw 1fr auto;
+    gap: 2vw;
+    align-items: center;
+  }
+  .mmc-label {
+    font-size: clamp(11px, 3.2vw, 13px);
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .mmc-track {
+    height: 14px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .mmc-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .mmc-value {
+    font-size: clamp(11px, 3.3vw, 14px);
+    font-weight: 700;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+    min-width: 14vw;
+    text-align: right;
+  }
+  .mmc-caption {
+    margin-top: 1vh;
+    font-size: clamp(10px, 2.8vw, 12px);
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+  }
+
   /* MOBILE-ONLY portfolio composition bars (slide 6) */
   .mobile-portfolio {
     display: none;
@@ -644,9 +689,21 @@
     .big-takeaway p { font-size: clamp(20px, 6vw, 28px) !important; max-width: 100%; }
     .big-takeaway p:last-child { font-size: clamp(13px, 3.8vw, 16px) !important; }
 
-    /* FOOTER & NAV HINT */
-    .footer { font-size: clamp(10px, 2.9vw, 12px); left: 5vw; right: 5vw; bottom: 2vh; }
+    /* FOOTER — flow with content (was absolute, which let content scroll under it) */
+    .footer {
+      font-size: clamp(10px, 2.9vw, 12px);
+      position: static !important;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      margin-top: 3.5vh;
+      padding-top: 1.5vh;
+      border-top: 1px solid var(--line);
+      opacity: 0.6;
+    }
     .nav-hint { display: none; }
+    /* Generous bottom padding so last content + footer breathe */
+    .slide { padding-bottom: 4vh !important; }
 
     /* VERSION STAMP — readable on mobile */
     .version-stamp {
@@ -666,6 +723,7 @@
     /* PORTFOLIO COMPOSITION — swap SVG for HTML bar chart on mobile (slide 6) */
     .desktop-chart { display: none !important; }
     .mobile-portfolio { display: flex !important; }
+    .mobile-mini-chart { display: flex !important; }
 
     /* STATUS MIX DONUT — constrain donut size on mobile so legend fits without cropping (slide 7) */
     .two-col svg[viewBox^="0 0 320"] {
@@ -806,7 +864,7 @@
     <h2 class="slide-title">Round 38 was a one-time scale-up: 8 institutional Phase 1 grants in a single cycle</h2>
     <p class="lede">Rounds 36 and 38 mark inflection points — cap doubled to $200K in R36, eight Phase 1 cohort funded in R38.</p>
 
-    <div class="chart">
+    <div class="chart desktop-chart">
       <svg viewBox="0 0 1200 480" xmlns="http://www.w3.org/2000/svg">
         <!-- Y-axis grid -->
         <g stroke="#d8d4cc" stroke-width="1">
@@ -884,6 +942,25 @@
       </svg>
     </div>
 
+    <!-- Mobile-only HTML version: round → bar → $ amount -->
+    <div class="mobile-mini-chart">
+      <div class="mmc-row"><span class="mmc-label">R31</span><div class="mmc-track"><div class="mmc-fill" style="width: 1.5%; background: #A91D3A;"></div></div><span class="mmc-value">$100K</span></div>
+      <div class="mmc-row"><span class="mmc-label">R32</span><div class="mmc-track"><div class="mmc-fill" style="width: 14.7%; background: #A91D3A;"></div></div><span class="mmc-value">$950K</span></div>
+      <div class="mmc-row"><span class="mmc-label">R33</span><div class="mmc-track"><div class="mmc-fill" style="width: 17%; background: #A91D3A;"></div></div><span class="mmc-value">$1.10M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R34</span><div class="mmc-track"><div class="mmc-fill" style="width: 3.9%; background: #A91D3A;"></div></div><span class="mmc-value">$250K</span></div>
+      <div class="mmc-row"><span class="mmc-label">R35</span><div class="mmc-track"><div class="mmc-fill" style="width: 12.3%; background: #A91D3A;"></div></div><span class="mmc-value">$800K</span></div>
+      <div class="mmc-row"><span class="mmc-label">R36</span><div class="mmc-track"><div class="mmc-fill" style="width: 40.9%; background: #A91D3A;"></div></div><span class="mmc-value">$2.65M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R37</span><div class="mmc-track"><div class="mmc-fill" style="width: 27.8%; background: #A91D3A;"></div></div><span class="mmc-value">$1.80M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R38</span><div class="mmc-track"><div class="mmc-fill" style="width: 100%; background: #1B4965;"></div></div><span class="mmc-value">$6.48M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R39</span><div class="mmc-track"><div class="mmc-fill" style="width: 21.6%; background: #A91D3A;"></div></div><span class="mmc-value">$1.40M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R40</span><div class="mmc-track"><div class="mmc-fill" style="width: 27.8%; background: #A91D3A;"></div></div><span class="mmc-value">$1.80M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R41</span><div class="mmc-track"><div class="mmc-fill" style="width: 17.9%; background: #A91D3A;"></div></div><span class="mmc-value">$1.16M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R42</span><div class="mmc-track"><div class="mmc-fill" style="width: 30.9%; background: #A91D3A;"></div></div><span class="mmc-value">$2.00M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R43</span><div class="mmc-track"><div class="mmc-fill" style="width: 27.8%; background: #A91D3A;"></div></div><span class="mmc-value">$1.80M</span></div>
+      <div class="mmc-row"><span class="mmc-label">R44</span><div class="mmc-track"><div class="mmc-fill" style="width: 40.1%; background: #A91D3A;"></div></div><span class="mmc-value">$2.60M</span></div>
+      <p class="mmc-caption">R38 (blue) is the institutional Phase 1 outlier · scale relative to $6.48M max</p>
+    </div>
+
     <div class="footer"><span>4 · Funding by round</span></div>
   </section>
 
@@ -893,7 +970,7 @@
     <h2 class="slide-title">Reviewer strictness moves in waves — not a steady trend</h2>
     <p class="lede">Range: 33% (R34, lowest) to 82% (R37, highest). Long-run average ~57% for these 14 rounds vs. 51% program lifetime.</p>
 
-    <div class="chart">
+    <div class="chart desktop-chart">
       <svg viewBox="0 0 1200 460" xmlns="http://www.w3.org/2000/svg">
         <!-- Grid -->
         <g stroke="#d8d4cc" stroke-width="1">
@@ -969,6 +1046,25 @@
           Phase 2 approval rate by round
         </text>
       </svg>
+    </div>
+
+    <!-- Mobile-only HTML version: round → bar → % -->
+    <div class="mobile-mini-chart">
+      <div class="mmc-row"><span class="mmc-label">R31</span><div class="mmc-track"><div class="mmc-fill" style="width: 50%; background: #A91D3A;"></div></div><span class="mmc-value">50%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R32</span><div class="mmc-track"><div class="mmc-fill" style="width: 64%; background: #A91D3A;"></div></div><span class="mmc-value">64%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R33</span><div class="mmc-track"><div class="mmc-fill" style="width: 73%; background: #A91D3A;"></div></div><span class="mmc-value">73%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R34</span><div class="mmc-track"><div class="mmc-fill" style="width: 33%; background: #C75566;"></div></div><span class="mmc-value" style="color: #A91D3A;">33%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R35</span><div class="mmc-track"><div class="mmc-fill" style="width: 50%; background: #A91D3A;"></div></div><span class="mmc-value">50%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R36</span><div class="mmc-track"><div class="mmc-fill" style="width: 78%; background: #A91D3A;"></div></div><span class="mmc-value">78%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R37</span><div class="mmc-track"><div class="mmc-fill" style="width: 82%; background: #2D6A4F;"></div></div><span class="mmc-value" style="color: #2D6A4F;">82%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R38</span><div class="mmc-track"><div class="mmc-fill" style="width: 65%; background: #A91D3A;"></div></div><span class="mmc-value">65%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R39</span><div class="mmc-track"><div class="mmc-fill" style="width: 50%; background: #A91D3A;"></div></div><span class="mmc-value">50%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R40</span><div class="mmc-track"><div class="mmc-fill" style="width: 59%; background: #A91D3A;"></div></div><span class="mmc-value">59%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R41</span><div class="mmc-track"><div class="mmc-fill" style="width: 40%; background: #C75566;"></div></div><span class="mmc-value" style="color: #A91D3A;">40%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R42</span><div class="mmc-track"><div class="mmc-fill" style="width: 48%; background: #A91D3A;"></div></div><span class="mmc-value">48%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R43</span><div class="mmc-track"><div class="mmc-fill" style="width: 50%; background: #A91D3A;"></div></div><span class="mmc-value">50%</span></div>
+      <div class="mmc-row"><span class="mmc-label">R44</span><div class="mmc-track"><div class="mmc-fill" style="width: 59%; background: #A91D3A;"></div></div><span class="mmc-value">59%</span></div>
+      <p class="mmc-caption">Phase 2 approval rate · 51% program lifetime average · green = high, lighter red = below 50%</p>
     </div>
 
     <div class="footer"><span>5 · Approval rates</span></div>
