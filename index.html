@@ -519,6 +519,21 @@
   }
   ul.compact li strong { color: var(--accent); font-weight: 600; }
 
+  /* MOBILE-ONLY portfolio composition bars (slide 6) */
+  .mobile-portfolio {
+    display: none;
+    flex-direction: column;
+    gap: 1.4vh;
+    margin-top: 2vh;
+    padding: 0 2vw;
+  }
+  .mbar { display: flex; flex-direction: column; gap: 0.5vh; }
+  .mbar-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .mbar-label { font-weight: 600; color: var(--fg); font-size: clamp(13px, 3.7vw, 16px); }
+  .mbar-count { font-weight: 700; color: var(--fg); font-variant-numeric: tabular-nums; font-size: clamp(13px, 3.7vw, 16px); }
+  .mbar-track { height: 12px; background: rgba(0,0,0,0.06); border-radius: 6px; overflow: hidden; }
+  .mbar-fill { height: 100%; border-radius: 6px; }
+
   /* ========================================
      MOBILE RESPONSIVE — phones & narrow tablets
      clamp(MIN_PX, FLEX_VW, MAX_PX) prevents text from shrinking below readable size
@@ -646,6 +661,22 @@
       border: none !important;
       padding: 0 !important;
       background: none !important;
+    }
+
+    /* PORTFOLIO COMPOSITION — swap SVG for HTML bar chart on mobile (slide 6) */
+    .desktop-chart { display: none !important; }
+    .mobile-portfolio { display: flex !important; }
+
+    /* STATUS MIX DONUT — constrain donut size on mobile so legend fits without cropping (slide 7) */
+    .two-col svg[viewBox^="0 0 320"] {
+      max-width: 60vw;
+      max-height: 60vw;
+      display: block;
+      margin: 0 auto;
+    }
+    /* Slide 7 had inline align-items:center; force start so donut + legend stack from the top and the slide scrolls cleanly */
+    .two-col[style*="align-items: center"] {
+      align-items: start !important;
     }
 
     /* SVG CHART TEXT — wide-aspect charts (funding/approval/sector) shrink hard on mobile.
@@ -813,22 +844,22 @@
           <rect x="1060" y="324.8" width="65" height="95.2" fill="#A91D3A"/>
           <rect x="1140" y="282.5" width="65" height="137.5" fill="#A91D3A"/>
         </g>
-        <!-- Bar values -->
-        <g fill="#1a1a1a" font-size="11" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">
-          <text x="132" y="408">100</text>
-          <text x="212" y="362">950</text>
-          <text x="292" y="354">1.1M</text>
-          <text x="372" y="399">250</text>
-          <text x="452" y="370">800</text>
-          <text x="532" y="272">2.65M</text>
-          <text x="612" y="317">1.8M</text>
-          <text x="692" y="69" fill="#1B4965">6.48M</text>
-          <text x="772" y="338">1.4M</text>
-          <text x="852" y="317">1.8M</text>
-          <text x="932" y="350">1.16M</text>
-          <text x="1012" y="307">2.0M</text>
-          <text x="1092" y="317">1.8M</text>
-          <text x="1172" y="275">2.6M</text>
+        <!-- Bar values (rotated -90 so they read vertically up the bar) -->
+        <g fill="#1a1a1a" font-size="12" font-family="-apple-system, sans-serif" text-anchor="start" font-weight="600">
+          <text x="132" y="412" transform="rotate(-90 132 412)">100</text>
+          <text x="212" y="366" transform="rotate(-90 212 366)">950</text>
+          <text x="292" y="358" transform="rotate(-90 292 358)">1.1M</text>
+          <text x="372" y="403" transform="rotate(-90 372 403)">250</text>
+          <text x="452" y="374" transform="rotate(-90 452 374)">800</text>
+          <text x="532" y="276" transform="rotate(-90 532 276)">2.65M</text>
+          <text x="612" y="321" transform="rotate(-90 612 321)">1.8M</text>
+          <text x="692" y="74" fill="#1B4965" transform="rotate(-90 692 74)">6.48M</text>
+          <text x="772" y="342" transform="rotate(-90 772 342)">1.4M</text>
+          <text x="852" y="321" transform="rotate(-90 852 321)">1.8M</text>
+          <text x="932" y="354" transform="rotate(-90 932 354)">1.16M</text>
+          <text x="1012" y="311" transform="rotate(-90 1012 311)">2.0M</text>
+          <text x="1092" y="321" transform="rotate(-90 1092 321)">1.8M</text>
+          <text x="1172" y="279" transform="rotate(-90 1172 279)">2.6M</text>
         </g>
         <!-- X-axis labels -->
         <g fill="#6b6b6b" font-size="13" font-family="-apple-system, sans-serif" text-anchor="middle">
@@ -909,22 +940,22 @@
           <circle cx="1175" cy="191.2" r="6" fill="#A91D3A"/>
         </g>
 
-        <!-- Value labels above points -->
-        <g fill="#1a1a1a" font-size="12" font-family="-apple-system, sans-serif" text-anchor="middle" font-weight="600">
-          <text x="135" y="208">50%</text>
-          <text x="215" y="163">64%</text>
-          <text x="295" y="134">73%</text>
-          <text x="375" y="262" fill="#A91D3A">33%</text>
-          <text x="455" y="208">50%</text>
-          <text x="535" y="118">78%</text>
-          <text x="615" y="105" fill="#2D6A4F">82%</text>
-          <text x="695" y="160">65%</text>
-          <text x="775" y="208">50%</text>
-          <text x="855" y="179">59%</text>
-          <text x="935" y="240" fill="#A91D3A">40%</text>
-          <text x="1015" y="214">48%</text>
-          <text x="1095" y="208">50%</text>
-          <text x="1175" y="179">59%</text>
+        <!-- Value labels above points (rotated -90 to read vertically) -->
+        <g fill="#1a1a1a" font-size="13" font-family="-apple-system, sans-serif" text-anchor="start" font-weight="600">
+          <text x="135" y="215" transform="rotate(-90 135 215)">50%</text>
+          <text x="215" y="170" transform="rotate(-90 215 170)">64%</text>
+          <text x="295" y="142" transform="rotate(-90 295 142)">73%</text>
+          <text x="375" y="269" fill="#A91D3A" transform="rotate(-90 375 269)">33%</text>
+          <text x="455" y="215" transform="rotate(-90 455 215)">50%</text>
+          <text x="535" y="125" transform="rotate(-90 535 125)">78%</text>
+          <text x="615" y="113" fill="#2D6A4F" transform="rotate(-90 615 113)">82%</text>
+          <text x="695" y="167" transform="rotate(-90 695 167)">65%</text>
+          <text x="775" y="215" transform="rotate(-90 775 215)">50%</text>
+          <text x="855" y="186" transform="rotate(-90 855 186)">59%</text>
+          <text x="935" y="247" fill="#A91D3A" transform="rotate(-90 935 247)">40%</text>
+          <text x="1015" y="221" transform="rotate(-90 1015 221)">48%</text>
+          <text x="1095" y="215" transform="rotate(-90 1095 215)">50%</text>
+          <text x="1175" y="186" transform="rotate(-90 1175 186)">59%</text>
         </g>
 
         <!-- X labels -->
@@ -949,7 +980,7 @@
     <h2 class="slide-title">Software/SaaS is now the largest single business-type bucket</h2>
     <p class="lede">~24% of awardees vs. ~23% therapeutics — a meaningful shift from the program's biomed-heavy history.</p>
 
-    <div class="chart" style="margin-top: 0.5vh;">
+    <div class="chart desktop-chart" style="margin-top: 0.5vh;">
       <svg viewBox="0 0 1200 380" xmlns="http://www.w3.org/2000/svg">
         <!-- Bars: each row 40px tall; max=21 → scaled to 700px -->
         <!-- Row format: label, value bar, count -->
@@ -999,6 +1030,43 @@
           Phase 2 awardees classified by business type (n ≈ 78)
         </text>
       </svg>
+    </div>
+
+    <!-- Mobile-only HTML version of the portfolio bar chart -->
+    <div class="mobile-portfolio">
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Software / SaaS / AI</span><span class="mbar-count">21</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 100%; background: #1B4965;"></div></div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Therapeutics</span><span class="mbar-count">18</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 86%; background: #A91D3A;"></div></div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Medical devices</span><span class="mbar-count">14</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 67%; background: #C75566;"></div></div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Sensor / chip / instrument</span><span class="mbar-count">11</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 52%; background: #5A8FAF;"></div></div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Defense / dual-use hardware</span><span class="mbar-count">11</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 52%; background: #2D6A4F;"></div></div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Diagnostics / biotech tools</span><span class="mbar-count">7</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 33%; background: #B7791F;"></div></div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Materials / specialty chemicals</span><span class="mbar-count">5</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 24%; background: #7B5610;"></div></div>
+      </div>
+      <div class="mbar">
+        <div class="mbar-row"><span class="mbar-label">Food/Ag, robotics, other</span><span class="mbar-count">2</span></div>
+        <div class="mbar-track"><div class="mbar-fill" style="width: 10%; background: #999;"></div></div>
+      </div>
+      <p style="margin-top: 1vh; font-size: clamp(10px, 2.8vw, 12px); color: var(--muted); font-style: italic; text-align: center;">Phase 2 awardees by business type (n ≈ 78)</p>
     </div>
 
     <div class="footer"><span>6 · Business type</span></div>
