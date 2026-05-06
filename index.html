@@ -85,17 +85,15 @@
   .muted { color: var(--muted); }
 
   .footer {
-    position: absolute;
-    bottom: 1.8vh;
-    left: 6vw;
-    right: 6vw;
+    margin-top: auto;
+    padding-top: 1.5vh;
     display: flex;
     justify-content: flex-start;
     font-size: 0.75vw;
     color: var(--gray);
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    opacity: 0.65;
+    opacity: 0.6;
   }
 
   .kicker { color: var(--accent); font-weight: 600; }
@@ -689,21 +687,15 @@
     .big-takeaway p { font-size: clamp(20px, 6vw, 28px) !important; max-width: 100%; }
     .big-takeaway p:last-child { font-size: clamp(13px, 3.8vw, 16px) !important; }
 
-    /* FOOTER — flow with content (was absolute, which let content scroll under it) */
+    /* FOOTER on mobile — slightly bigger gap above + visual divider */
     .footer {
       font-size: clamp(10px, 2.9vw, 12px);
-      position: static !important;
-      left: auto;
-      right: auto;
-      bottom: auto;
-      margin-top: 3.5vh;
+      margin-top: 3vh;
       padding-top: 1.5vh;
       border-top: 1px solid var(--line);
-      opacity: 0.6;
     }
     .nav-hint { display: none; }
-    /* Generous bottom padding so last content + footer breathe */
-    .slide { padding-bottom: 4vh !important; }
+    .slide { padding-bottom: 3vh !important; }
 
     /* VERSION STAMP — readable on mobile */
     .version-stamp {
@@ -737,39 +729,45 @@
       align-items: start !important;
     }
 
-    /* SVG CHART TEXT — wide-aspect charts (funding/approval/sector) shrink hard on mobile.
-       Bump text in user units so it's readable when the chart scales to phone width. */
-    .chart svg[viewBox^="0 0 1200"] text {
-      font-size: 36px !important;
-    }
-    .chart svg[viewBox^="0 0 1200"] text[font-size="11"],
-    .chart svg[viewBox^="0 0 1200"] text[font-size="12"] {
-      font-size: 32px !important;
-    }
-    /* Geography map small labels */
+    /* GEOGRAPHY MAP — bubble city labels need bigger user-unit font on mobile */
     .two-col svg[viewBox^="0 0 580"] text[font-size="10"],
     .two-col svg[viewBox^="0 0 580"] text[font-size="11"],
     .two-col svg[viewBox^="0 0 580"] text[font-size="12"] {
-      font-size: 14px !important;
+      font-size: 22px !important;
+    }
+    /* Status mix donut center text */
+    .two-col svg[viewBox^="0 0 320"] text[font-size="13"] {
+      font-size: 18px !important;
+    }
+    .two-col svg[viewBox^="0 0 320"] text[font-size="48"] {
+      font-size: 56px !important;
     }
 
-    /* INLINE FONT-SIZE OVERRIDES — many slides use inline `font-size: X.XXvw`
-       which the rest of this media query can't catch. Force a readable floor. */
+    /* INLINE FONT-SIZE OVERRIDES — bump floors by ~2px for better mobile readability */
     [style*="font-size: 0.7"], [style*="font-size: 0.78vw"] {
-      font-size: clamp(11px, 3vw, 13px) !important;
+      font-size: clamp(12px, 3.3vw, 14px) !important;
     }
     [style*="font-size: 0.8"], [style*="font-size: 0.85vw"] {
-      font-size: clamp(11px, 3.1vw, 13px) !important;
+      font-size: clamp(12px, 3.4vw, 14px) !important;
     }
     [style*="font-size: 0.9"], [style*="font-size: 0.92vw"], [style*="font-size: 0.95vw"] {
-      font-size: clamp(12px, 3.4vw, 15px) !important;
+      font-size: clamp(13px, 3.6vw, 15px) !important;
     }
     [style*="font-size: 1vw"], [style*="font-size: 1.0"], [style*="font-size: 1.05"] {
-      font-size: clamp(13px, 3.6vw, 16px) !important;
+      font-size: clamp(14px, 3.8vw, 16px) !important;
     }
     [style*="font-size: 1.1vw"], [style*="font-size: 1.15"], [style*="font-size: 1.2"] {
-      font-size: clamp(14px, 3.8vw, 17px) !important;
+      font-size: clamp(15px, 4vw, 17px) !important;
     }
+
+    /* Bump common label/caption floors too */
+    .mmc-label, .mmc-value { font-size: clamp(13px, 3.5vw, 14px) !important; }
+    .mmc-caption { font-size: clamp(11px, 3vw, 13px) !important; }
+    .company-meta .item .label, .lesson-label, .card .sub, .stat .label {
+      font-size: clamp(11px, 3.2vw, 13px) !important;
+    }
+    .company-news h3, .company-links h3 { font-size: clamp(12px, 3.4vw, 13px) !important; }
+    .data-table th { font-size: clamp(11px, 3.1vw, 13px) !important; }
   }
 
 </style>
@@ -780,7 +778,7 @@
 
   <!-- 1: TITLE -->
   <section class="slide active slide-title-page">
-    <span class="version-stamp">v 0.2.0</span>
+    <span class="version-stamp">v 0.2.1</span>
     <div class="accent-bar"></div>
     <h1>Ohio TVSF<br>Rounds 31–44</h1>
     <p class="subtitle">An analysis of 14 evaluator reports from the Technology Validation and Start-Up Fund — Jan 2023 through Apr 2026.</p>
